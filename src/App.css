@@ -148,6 +148,7 @@ html, body {
   max-width: 220px; /* Updated max-width */
   width: 100%;
   padding-left: 1em;
+  margin-top: -10px;
   box-sizing: border-box;
   position: relative; /* Ensure this is positioned correctly */
   z-index: 5; /* Ensure this is on top of the overlay */
@@ -393,6 +394,23 @@ button {
             mask: var(--mask);
     height: 100%;
     width: 100%;
+    background-image: linear-gradient(to right, #272727, #666666);
+    position: absolute;
+    z-index: -1;
+  }
+}
+
+/* Increase the size of .box on larger screens in landscape mode */
+/* Increase the size of .box on all larger screens in landscape mode */
+@media (min-width: 268px) and (orientation: landscape) {
+  .box {
+    --mask:
+      radial-gradient(72.05px at 50% calc(100% + 64px),#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) calc(50% - 64px) calc(50% - 16.5px + .5px)/128px 33px,
+      radial-gradient(72.05px at 50% -64px,#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) 50% calc(50% + 16.5px)/128px 33px;
+    -webkit-mask: var(--mask);
+            mask: var(--mask);
+    height: 200%; /* Increase height for larger screens */
+    width: 200%;  /* Increase width for larger screens */
     background-image: linear-gradient(to right, #272727, #666666);
     position: absolute;
     z-index: -1;
