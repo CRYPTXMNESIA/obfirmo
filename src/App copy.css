@@ -1,0 +1,257 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+* {
+  font-family: 'Consolas', monospace;
+  outline: none;
+}
+
+body {
+  color: white;
+  height: 100vh;
+  background-color: black; /* Ensure this matches your design */
+}
+
+html, body {
+  overflow: hidden;
+  outline: none;
+  animation: fadeInDown 0.5s forwards;
+}
+
+.App {
+  background-color: transparent;
+  width: 100%;
+  overflow: hidden;
+}
+
+.box {
+  --mask:
+    radial-gradient(112.3px at 50% calc(100% + 100px),#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) calc(50% - 100px) calc(50% - 25.5px + .5px)/200px 51px ,
+    radial-gradient(112.3px at 50% -100px,#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) 50% calc(50% + 25.5px)/200px 51px ;
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+  height: 100%; /* Set appropriate height */
+  width: 100%; /* Set appropriate width */
+  background-image: linear-gradient(to right, #272727, #666666);
+  position: absolute; /* Ensure it's positioned correctly */
+  z-index: -1;
+}
+
+.tilt-container {
+  position: fixed;  /* Use fixed to keep it in view regardless of scrolling */
+  top: -50vh;       /* Offset by half the viewport height */
+  left: -50vw;      /* Offset by half the viewport width */
+  width: 200vw;     /* Double the viewport width */
+  height: 200vh;    /* Double the viewport height */
+  transform: rotate(-40deg);
+  transform-origin: center;
+  overflow: hidden;
+  z-index: 0; /* Ensure it stays behind the other elements */
+}
+
+.fade-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%; /* Adjust the width based on how much fade you want */
+  height: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, transparent 100%);
+  pointer-events: none; /* Allows clicks to pass through */
+  z-index: 1; /* Ensure it's above other content but below modal/dialog levels */
+}
+
+.wrapper {
+  max-width: 220px; /* Updated max-width */
+  width: 100%;
+  padding: 1em;
+  box-sizing: border-box;
+  position: relative; /* Ensure this is positioned correctly */
+  z-index: 5; /* Ensure this is on top of the overlay */
+}
+
+:root {
+  --glow-intensity: 5px;
+  --glow-intensity2: 5px;
+  --glow-intensity3: 5px;
+  --glow-intensity4: 5px;
+  --button-glow-intensity: 5px;
+}
+
+.ascii-art {
+  font-size: 0.55em;
+  font-weight: bold;
+  line-height: 1.2;
+  color: rgb(255,162,0);
+  white-space: pre;
+  animation: fadeInDown 0.5s forwards;
+  text-shadow: 
+    0 0 var(--glow-intensity) #ffab00, 
+    0 0 calc(2 * var(--glow-intensity)) #ffab00, 
+    0 0 calc(3 * var(--glow-intensity)) #ffab00, 
+    0 0 calc(4 * var(--glow-intensity)) #ffab00, 
+    0 0 calc(5 * var(--glow-intensity)) #ffab00, 
+    0 0 calc(6 * var(--glow-intensity)) #ffab00, 
+    0 0 calc(7 * var(--glow-intensity)) #ffab00;
+}
+
+.App-header {
+  font-size: 1.05em; /* Adjusted for smaller width */
+  margin-bottom: 40px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.input-container, .hash-container, .final-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%; /* Ensure it takes full width of the container */
+}
+
+button {
+  width: 100%;
+  color: white;
+}
+
+.input-container input {
+  font-size: 1.05em;
+  margin: 0.5em 0;
+  padding-left: 15px;
+  border: none;
+  border-left: 1px solid white;
+  background-color: transparent;
+  color: white;
+  width: 100%; /* Ensure it takes full width of the container */
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+.input-container button {
+  background-color: transparent;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.123), transparent);
+  font-size: 1.05em;
+  text-align: left;
+  border: none;
+  border-left: 3px solid white;
+  margin-top: 20px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  width: 100%; /* Ensure it takes full width of the container */
+}
+
+.hash-container pre {
+  white-space: pre-wrap;
+  width: 100%; /* Ensure the hash is displayed in equal length lines */
+  word-break: break-all;
+  font-size: 1.05em;
+  margin: 0px;
+  margin-bottom: 20px;
+  color: rgb(30, 255, 0);
+  text-shadow: 
+    0 0 var(--glow-intensity4) rgb(30, 255, 0), 
+    0 0 calc(2 * var(--glow-intensity4)) rgb(30, 255, 0), 
+    0 0 calc(3 * var(--glow-intensity4)) rgb(30, 255, 0), 
+    0 0 calc(4 * var(--glow-intensity4)) rgb(30, 255, 0), 
+    0 0 calc(5 * var(--glow-intensity4)) rgb(30, 255, 0), 
+    0 0 calc(6 * var(--glow-intensity4)) rgb(30, 255, 0), 
+    0 0 calc(7 * var(--glow-intensity4)) rgb(30, 255, 0);
+  font-weight: bold;
+}
+
+.yourPass {
+  margin-bottom: 15px;
+  text-shadow: 
+    0 0 var(--glow-intensity2) #fff, 
+    0 0 calc(2 * var(--glow-intensity2)) #fff, 
+    0 0 calc(3 * var(--glow-intensity2)) #fff, 
+    0 0 calc(4 * var(--glow-intensity2)) #fff, 
+    0 0 calc(5 * var(--glow-intensity2)) #fff, 
+    0 0 calc(6 * var(--glow-intensity2)) #fff, 
+    0 0 calc(7 * var(--glow-intensity2)) #fff;
+}
+
+.final-container .password-result {
+  font-size: 1.05em; /* Adjusted for smaller width */
+  margin-top: 0px;
+  color: rgb(255, 0, 120);
+  text-shadow: 
+    0 0 var(--glow-intensity3) rgb(255, 0, 120), 
+    0 0 calc(2 * var(--glow-intensity3)) rgb(255, 0, 120), 
+    0 0 calc(3 * var(--glow-intensity3)) rgb(255, 0, 120), 
+    0 0 calc(4 * var(--glow-intensity3)) rgb(255, 0, 120), 
+    0 0 calc(5 * var(--glow-intensity3)) rgb(255, 0, 120), 
+    0 0 calc(6 * var(--glow-intensity3)) rgb(255, 0, 120), 
+    0 0 calc(7 * var(--glow-intensity3)) rgb(255, 0, 120);
+  font-weight: bold;
+  word-break: break-all; /* Ensure long passwords break into the next line if necessary */
+  white-space: pre-wrap; /* Maintain whitespace for new lines */
+}
+
+.buttons-container {
+
+  gap: 0.5em; /* Adjusted for smaller width */
+  width: 100%; /* Ensure it takes full width of the container */
+
+}
+
+.buttons-container button {
+  background-color: transparent;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.123), transparent);
+  font-size: 1.05em;
+  text-align: left;
+  border: none;
+  border-left: 3px solid white;
+  padding: 0.5em 1em;
+  margin-bottom: 10px;
+  width: 100%;
+  color: white;
+  flex: 1; /* Ensure buttons share available space equally */
+  cursor: pointer;
+}
+
+.password-reveal {
+  margin-top: 1em;
+  color: white;
+  background-color: transparent;
+}
+
+.password-reveal span {
+  display: inline-block;
+  opacity: 0;
+  animation: reveal 0.5s forwards;
+}
+
+@keyframes reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOutUp {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+.fade-in-down {
+  animation: fadeInDown 0.5s forwards;
+}
+
+.fade-out-up {
+  animation: fadeOutUp 0.5s forwards;
+}

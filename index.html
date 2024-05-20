@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Pwnage Check</title>
+    <style>
+        .pwned {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <input type="password" id="password" placeholder="Enter Password">
+    <button onclick="checkPassword()">Check Password</button>
+    <p id="result"></p>
+
+    <script>
+        async function checkPassword() {
+            const password = document.getElementById('password').value;
+            const hash = sha1(password);
+            const prefix = hash.substring(0, 5);
+            const suffix = hash.substring(5).toUpperCase();
+            
+            const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+            const data = await response.text();
+
+            const pwned = data.split('\n').some(line => line.startsWith(suffix));
+            
+            const result = document.getElementById('result');
+            if (pwned) {
+                result.textContent = 'This password has been pwned!';
+                result.classList.add('pwned');
+            } else {
+                result.textContent = 'This password is safe.';
+                result.classList.remove('pwned');
+            }
+        }
+
+        function sha1(msg) {
+            // SHA-1 hashing function
+            const shaObj = new jsSHA("SHA-1", "TEXT");
+            shaObj.update(msg);
+            return shaObj.getHash("HEX");
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.4.2/sha.js"></script>
+</body>
+</html>
