@@ -147,7 +147,7 @@ html, body {
 .wrapper {
   max-width: 220px; /* Updated max-width */
   width: 100%;
-  padding: 1em;
+  padding-left: 1em;
   box-sizing: border-box;
   position: relative; /* Ensure this is positioned correctly */
   z-index: 5; /* Ensure this is on top of the overlay */
