@@ -72,16 +72,17 @@ html, body {
 
 .default-layer {
   background-image: linear-gradient(to right, #272727, #666666);
+  opacity: 1; /* Default layer should start visible */
 }
 
 .safe-layer {
   background-image: linear-gradient(to right, #272727, rgb(15, 155, 0));
-  opacity: 0;
+  opacity: 0; /* Start hidden */
 }
 
 .breached-layer {
   background-image: linear-gradient(to right, #272727, rgb(155, 0, 0));
-  opacity: 0;
+  opacity: 0; /* Start hidden */
 }
 
 .tilt-container {
@@ -415,4 +416,77 @@ button {
     position: absolute;
     z-index: -1;
   }
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.progress-stage {
+  width: 20px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.progress-connector {
+  flex: 1;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.progress-stage.active {
+  background-color: var(--progress-color-end);
+  box-shadow: 0 0 5px var(--progress-color-end), 0 0 10px var(--progress-color-end);
+}
+
+.progress-stage.active + .progress-connector {
+  background-color: var(--progress-color-end);
+}
+
+.hash-container .yourPass {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--progress-color-end);
+  transition: color 0.3s ease;
+  margin-bottom: 10px;
+}
+
+/* Safe state styles */
+.safe-ascii,
+.safe-layer,
+.safe-password,
+.safe-message,
+.safe-progress .progress-stage.active,
+.safe-progress .progress-stage.active + .progress-connector,
+.safe-progress .yourPass {
+  --progress-color-end: #009900;
+}
+
+/* Breached state styles */
+.breached-ascii,
+.breached-layer,
+.breached-password,
+.breached-message,
+.breached-progress .progress-stage.active,
+.breached-progress .progress-stage.active + .progress-connector,
+.breached-progress .yourPass {
+  --progress-color-end: #cc0000;
+}
+
+/* Default state styles */
+.default-ascii,
+.default-layer,
+.default-password,
+.default-message,
+.default-progress .progress-stage.active,
+.default-progress .progress-stage.active + .progress-connector,
+.default-progress .yourPass {
+  --progress-color-end: #ff8800;
 }
