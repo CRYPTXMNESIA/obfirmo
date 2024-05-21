@@ -30,6 +30,11 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [overlayActive, setOverlayActive] = useState(true);
   const [loaderClass, setLoaderClass] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [progressMessage, setProgressMessage] = useState('');
+
+  const progressBarRef = useRef(null);
+  const progressMessageRef = useRef(null);
 
   const specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~";
   const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -80,12 +85,24 @@ function App() {
 
     let passwordArray = [];
 
+    setProgressMessage('Adding special characters...');
     passwordArray.push(getRandomCharacter(specialCharacters, rng));
+    setProgress(20);
+
+    setProgressMessage('Adding uppercase letters...');
     passwordArray.push(getRandomCharacter(upperCase, rng));
+    setProgress(40);
+
+    setProgressMessage('Adding lowercase letters...');
     passwordArray.push(getRandomCharacter(lowerCase, rng));
+    setProgress(60);
+
+    setProgressMessage('Adding numbers...');
     passwordArray.push(getRandomCharacter(numbers, rng));
+    setProgress(80);
 
     const allCharacters = specialCharacters + upperCase + lowerCase + numbers;
+    setProgressMessage('Generating remaining characters...');
     for (let i = 4; i < 32; i++) {
       passwordArray.push(getRandomCharacter(allCharacters, rng));
     }
@@ -110,12 +127,14 @@ function App() {
   };
 
   const generateFinalPassword = async (key, site) => {
+    setProgressMessage('Generating final password...');
     const finalPassword = generateRandomPassword(key, site);
     const formattedPassword = formatPassword(finalPassword);
     setPassword(formattedPassword);
     setDisplayedPassword(formatPassword('*'.repeat(32)));
     setAnimationClass('fade-out-up');
 
+    setProgressMessage('Checking password for breach...');
     if (navigator.onLine) {
       console.log('Online: Checking password status...');
       const status = await checkPasswordPwned(finalPassword);
@@ -129,28 +148,18 @@ function App() {
     setTimeout(() => {
       setStage('final');
       setAnimationClass('fade-in-down');
+      setProgress(100);
+      setProgressMessage('Password generation complete!');
     }, 500);
   };
 
   const animateHashGeneration = async (key, site) => {
-    let combinedString = key + site;
-    let newHash = '';
-    for (let i = 0; i < 100; i++) {
-      newHash = await generateSHA256Hash(combinedString);
-      setHash(formatHash(newHash, 4));
-      combinedString = newHash;
-      await new Promise(resolve => setTimeout(resolve, 10));
-    }
+    setProgress(0);
+    setProgressMessage('Initializing...');
+    await new Promise(resolve => setTimeout(resolve, 500));
+    setProgress(10);
+  
     await generateFinalPassword(key, site);
-  };
-
-  const formatHash = (hash, numLines) => {
-    const partLength = Math.ceil(hash.length / numLines);
-    const lines = [];
-    for (let i = 0; i < numLines; i++) {
-      lines.push(hash.substring(i * partLength, (i + 1) * partLength));
-    }
-    return lines.join('\n');
   };
 
   const formatPassword = (password) => {
@@ -296,10 +305,13 @@ function App() {
     const asciiArtElement = document.querySelector('.ascii-art');
   
     console.log('Password status:', passwordStatus);
-    
+  
     if (boxElement && asciiArtElement && safeLayer && breachedLayer) {
-      asciiArtElement.classList.remove('safe-ascii', 'breached-ascii');
+      asciiArtElement.classList.remove('safe-ascii', 'breached-ascii', 'default-ascii');
       boxElement.classList.remove('safe-bg', 'breached-bg', 'default-bg');
+  
+      // Force reflow
+      void boxElement.offsetWidth;
   
       if (passwordStatus === 'safe') {
         safeLayer.style.opacity = '1';
@@ -314,6 +326,7 @@ function App() {
       } else {
         safeLayer.style.opacity = '0';
         breachedLayer.style.opacity = '0';
+        asciiArtElement.classList.add('default-ascii');
         console.log('Added default-bg class');
       }
     }
@@ -386,7 +399,7 @@ const asciiArt = `
       </div>
       <div className="wrapper">
         <header style={{ fontWeight: "bold" }} className="App-header">
-          <pre className={`ascii-art ${passwordStatus === 'breached' ? 'breached-ascii' : passwordStatus === 'safe' ? 'safe-ascii' : ''}`}>
+          <pre className={`ascii-art ${passwordStatus === 'breached' ? 'breached-ascii' : passwordStatus === 'safe' ? 'safe-ascii' : 'default-ascii'}`}>
             {asciiArt}
           </pre>
         </header>
@@ -411,8 +424,17 @@ const asciiArt = `
             </div>
           ) : stage === 'hash' ? (
             <div className={`hash-container ${animationClass}`}>
-              <div className='yourPass'>[*] hashing...</div>
-              <pre>{hash}</pre>
+              <div className='yourPass' ref={progressMessageRef}>{progressMessage}</div>
+              <div className={`progress-container ${passwordStatus ? passwordStatus + '-progress' : 'default-progress'}`}>
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <React.Fragment key={index}>
+                    <div
+                      className={`progress-stage ${progress >= (index + 1) * 20 ? 'active' : ''}`}
+                    ></div>
+                    {index < 4 && <div className="progress-connector"></div>}
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
           ) : (
             <div className={`final-container ${animationClass}`}>
@@ -444,7 +466,7 @@ const asciiArt = `
         </div>
       </div>
     </div>
-  );  
+  );
 }
 
 export default App;
