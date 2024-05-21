@@ -441,9 +441,9 @@ const asciiArt = `
               <div className='yourPass'>
                 {isOnline && passwordStatus !== null ? (
                   passwordStatus === 'safe' ? (
-                    <span><span style={{ color: "rgb(23, 194, 0)" }}>[+] STATUS: SAFE ></span></span>
+                    <span><span style={{ color: "rgb(23, 194, 0)" }}>[ STATUS: SAFE ]</span></span>
                   ) : (
-                    <span><span style={{ color: "red" }}>[!] STATUS: PWNED ></span></span>
+                    <span><span style={{ color: "red" }}>[ STATUS: PWNED ]</span></span>
                   )
                 ) : (
                   <span>[+] Your Password ></span>
