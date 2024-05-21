@@ -346,19 +346,6 @@ function App() {
     console.log('%cDO NOT PASTE ANYTHING HERE!', 'font-size:40px;color:red;background-color:black;border:5px solid black;');
   }, []);
 
-  useEffect(() => {
-    const handlePaste = (event) => {
-      alert('Pasting code here can be dangerous. Do not paste any code!');
-      event.preventDefault();
-    };
-
-    document.addEventListener('paste', handlePaste);
-
-    return () => {
-      document.removeEventListener('paste', handlePaste);
-    };
-  }, []);
-
 const asciiArt = `
          __    _____                    
   ____  / /_  / __(_)________ ___  ____ 
