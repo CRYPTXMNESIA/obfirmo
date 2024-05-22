@@ -1,32 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Eye, EyeOff, AlertTriangle } from 'react-feather';
+import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { AlertTriangle } from 'react-feather';
 import jsSHA from 'jssha';
 import seedrandom from 'seedrandom';
-import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 
 const Loader = () => {
-  return (
-    <div className="loader"></div>
-  );
-}
+  return <div className="loader"></div>;
+};
 
 function App() {
   const [masterKey, setMasterKey] = useState('');
   const [site, setSite] = useState('');
-  const [hash, setHash] = useState('');
   const [password, setPassword] = useState('');
   const [displayedPassword, setDisplayedPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [stage, setStage] = useState('input');
   const [animationClass, setAnimationClass] = useState('fade-in-down');
-  const [featureSupported, setFeatureSupported] = useState(true);
   const [copyIcon, setCopyIcon] = useState(faCopy);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [passwordStatus, setPasswordStatus] = useState(null);
   const buttonsContainerRef = useRef(null);
-  const [backgroundTransition, setBackgroundTransition] = useState('default-bg');
   const [loading, setLoading] = useState(true);
   const [overlayActive, setOverlayActive] = useState(true);
   const [loaderClass, setLoaderClass] = useState("");
@@ -40,6 +35,7 @@ function App() {
   const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const lowerCase = "abcdefghijklmnopqrstuvwxyz";
   const numbers = "0123456789";
+  const pepper = 'fixed_pepper_value';  // Use a constant value as a pepper
 
   useEffect(() => {
     if (!loading) {
@@ -79,8 +75,8 @@ function App() {
     return array;
   };
 
-  const generateRandomPassword = (key, site) => {
-    const combinedString = key + site;
+  const generateRandomPassword = (key, site, salt) => {
+    const combinedString = key + site + salt;
     const rng = seedrandom(combinedString);
 
     let passwordArray = [];
@@ -127,12 +123,16 @@ function App() {
   };
 
   const generateFinalPassword = async (key, site) => {
+    setProgressMessage('Generating salt...');
+    const salt = await generateSHA256Hash(key + site + pepper);
+    setProgress(10);
     setProgressMessage('Generating final password...');
-    const finalPassword = generateRandomPassword(key, site);
+    const finalPassword = generateRandomPassword(key, site, salt);
     const formattedPassword = formatPassword(finalPassword);
     setPassword(formattedPassword);
     setDisplayedPassword(formatPassword('*'.repeat(32)));
     setAnimationClass('fade-out-up');
+    setProgress(90);
 
     setProgressMessage('Checking password for breach...');
     if (navigator.onLine) {
@@ -185,7 +185,6 @@ function App() {
     setTimeout(() => {
       setMasterKey('');
       setSite('');
-      setHash('');
       setPassword('');
       setDisplayedPassword('');
       setShowPassword(false);
@@ -244,13 +243,6 @@ function App() {
       revealPassword();
     }
     setShowPassword(!showPassword);
-  };
-
-  const supportsRequiredFeatures = () => {
-    return (
-      'clipboard' in navigator &&
-      CSS.supports('(--fake-var: 0)')
-    );
   };
 
   useEffect(() => {
@@ -367,7 +359,14 @@ const asciiArt = `
 \\____/_.___/_/ /_/_/  /_/ /_/ /_/\\____/ 
 `;
 
-  if (!featureSupported) {
+  const supportsRequiredFeatures = () => {
+    return (
+      'clipboard' in navigator &&
+      CSS.supports('(--fake-var: 0)')
+    );
+  };
+
+  if (!supportsRequiredFeatures()) {
     return (
       <div className="unsupported-warning">
         <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '60px' }} />
