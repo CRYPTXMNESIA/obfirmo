@@ -134,7 +134,7 @@ function App() {
     setDisplayedPassword(formatPassword('*'.repeat(32)));
     setAnimationClass('fade-out-up');
 
-    setProgressMessage('Checking password for breach...');
+    setProgressMessage('Checking for breach...');
     if (navigator.onLine) {
       console.log('Online: Checking password status...');
       const status = await checkPasswordPwned(finalPassword);
@@ -390,6 +390,7 @@ const asciiArt = `
     <div className="App">
       {overlayActive && <div className="overlay"></div>}
       <div className='fade-overlay'></div>
+      <div className='fade-overlay2'></div>
       <div className="tilt-container">
         <div className="box">
           <div className="layer default-layer"></div>
@@ -426,7 +427,7 @@ const asciiArt = `
             <div className={`hash-container ${animationClass}`}>
               <div className='yourPass' ref={progressMessageRef}>{progressMessage}</div>
               <div className={`progress-container ${passwordStatus ? passwordStatus + '-progress' : 'default-progress'}`}>
-                {Array.from({ length: 5 }).map((_, index) => (
+              {Array.from({ length: 5 }).map((_, index) => (
                   <React.Fragment key={index}>
                     <div
                       className={`progress-stage ${progress >= (index + 1) * 20 ? 'active' : ''}`}
@@ -441,12 +442,12 @@ const asciiArt = `
               <div className='yourPass'>
                 {isOnline && passwordStatus !== null ? (
                   passwordStatus === 'safe' ? (
-                    <span><span style={{ color: "rgb(23, 194, 0)" }}>[ STATUS: SAFE ]</span></span>
+                    <span><span style={{ color: "rgb(23, 194, 0)" }}>[STATUS: SAFE]</span></span>
                   ) : (
-                    <span><span style={{ color: "red" }}>[ STATUS: PWNED ]</span></span>
+                    <span><span style={{ color: "red" }}>[STATUS: PWNED]</span></span>
                   )
                 ) : (
-                  <span>[ STATUS: OFFLINE ]</span>
+                  <span>[STATUS: OFFLINE]</span>
                 )}
               </div>
               <pre className={`password-result ${passwordStatus === 'breached' ? 'breached-password' : passwordStatus === 'safe' ? 'safe-password' : ''}`}>{displayedPassword}</pre>
