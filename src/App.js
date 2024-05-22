@@ -446,7 +446,7 @@ const asciiArt = `
                     <span><span style={{ color: "red" }}>[ STATUS: PWNED ]</span></span>
                   )
                 ) : (
-                  <span>[ STATUS: OFFLINE ]</span>
+                  <span>[ STATUS: OFFLINE ]</span>
                 )}
               </div>
               <pre className={`password-result ${passwordStatus === 'breached' ? 'breached-password' : passwordStatus === 'safe' ? 'safe-password' : ''}`}>{displayedPassword}</pre>
