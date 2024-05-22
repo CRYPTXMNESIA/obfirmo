@@ -7,7 +7,7 @@
 }
 
 input, button {
-  border-radius: 0; /* Ensuring no rounded corners */
+  border-radius: 0;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -17,14 +17,15 @@ input, button {
 
 /* Hide scrollbar for IE, Edge, and Firefox */
 * {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 body {
   color: white;
   height: 100vh;
-  background-color: black; /* Ensure this matches your design */
+  background-color: black;
+  margin: 0;
 }
 
 html, body {
@@ -37,27 +38,22 @@ html, body {
   background-color: transparent;
   width: 100%;
   overflow: hidden;
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
+  padding: env(safe-area-inset);
 }
 
 .box {
-  --mask:
-    radial-gradient(112.3px at 50% calc(100% + 100px), #0000 calc(99% - 1px), #000 calc(101% - 1px) 99%, #0000 101%) calc(50% - 100px) calc(50% - 25.5px + .5px)/200px 51px,
-    radial-gradient(112.3px at 50% -100px, #0000 calc(99% - 1px), #000 calc(101% - 1px) 99%, #0000 101%) 50% calc(50% + 25.5px)/200px 51px;
+  --mask: radial-gradient(112.3px at 50% calc(100% + 100px), #0000 calc(99% - 1px), #0000 calc(101% - 1px) 99%, #0000 101%) calc(50% - 100px) calc(50% - 25.5px + .5px)/200px 51px, radial-gradient(112.3px at 50% -100px, #0000 calc(99% - 1px), #000 calc(101% - 1px) 99%, #0000 101%) 50% calc(50% + 25.5px)/200px 51px;
   -webkit-mask: var(--mask);
-          mask: var(--mask);
+  mask: var(--mask);
   height: 100%;
   width: 100%;
   background-image: linear-gradient(to right, #272727, #666666);
-  position: absolute;
+  position: fixed;
   z-index: -1;
 }
 
 .layer {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -67,22 +63,22 @@ html, body {
 }
 
 .transition-bg {
-  transition: background-image 0.5s ease-in-out; /* Add transition for smooth change */
+  transition: background-image 0.5s ease-in-out;
 }
 
 .default-layer {
   background-image: linear-gradient(to right, #272727, #666666);
-  opacity: 1; /* Default layer should start visible */
+  opacity: 1;
 }
 
 .safe-layer {
   background-image: linear-gradient(to right, #272727, rgb(15, 155, 0));
-  opacity: 0; /* Start hidden */
+  opacity: 0;
 }
 
 .breached-layer {
   background-image: linear-gradient(to right, #272727, rgb(155, 0, 0));
-  opacity: 0; /* Start hidden */
+  opacity: 0;
 }
 
 .tilt-container {
@@ -101,9 +97,20 @@ html, body {
   position: fixed;
   left: 0;
   top: 0;
-  width: 100%; /* Adjust the width based on how much fade you want */
+  width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, transparent 100%);
+  background: linear-gradient(to right, rgba(0, 0, 0, 1) -35%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.fade-overlay2 {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 40%; /* Adjust the height based on how much fade you want */
+  background: linear-gradient(to top, rgba(0, 0, 0, 1) -35%, transparent 100%);
   pointer-events: none; /* Allows clicks to pass through */
   z-index: 1; /* Ensure it's above other content but below modal/dialog levels */
 }
@@ -114,7 +121,7 @@ html, body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 40%;
   background-color: black;
   z-index: 10;
   animation: fadeOutOverlay 0.8s ease forwards;
@@ -123,12 +130,12 @@ html, body {
 .loader-fade-out {
   pointer-events: none;
   animation: fadeOut 0.5s;
-  animation-fill-mode: forwards; /* Keeps the state at the end of animation */
+  animation-fill-mode: forwards;
 }
 
 .app-fade-in {
   animation: fadeIn 0.8s;
-  animation-fill-mode: forwards; /* Keeps the state at the end of animation */
+  animation-fill-mode: forwards;
 }
 
 @keyframes fadeIn {
@@ -137,76 +144,48 @@ html, body {
 }
 
 @keyframes fadeOutOverlay {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 .wrapper {
-  max-width: 220px; /* Updated max-width */
+  max-width: 220px;
   width: 100%;
   padding-left: 1em;
   margin-top: -10px;
   box-sizing: border-box;
-  position: relative; /* Ensure this is positioned correctly */
-  z-index: 5; /* Ensure this is on top of the overlay */
+  position: relative;
+  z-index: 5;
 }
 
 :root {
   --glow-intensity: 5px;
-  --glow-intensity2: 5px;
-  --glow-intensity3: 5px;
-  --glow-intensity4: 5px;
   --button-glow-intensity: 5px;
 }
 
 .ascii-art {
-  font-size: 0.55em;
+  font-size: 1.5vh;
   font-weight: bold;
   line-height: 1.2;
   color: rgb(255,162,0);
   white-space: pre;
   animation: fadeInDown 0.5s forwards;
-  transition: color 0.5s, text-shadow 0.5s; /* Add transition */
-  text-shadow: 
-    0 0 var(--glow-intensity) #ffab00, 
-    0 0 calc(2 * var(--glow-intensity)) #ffab00, 
-    0 0 calc(3 * var(--glow-intensity)) #ffab00, 
-    0 0 calc(4 * var(--glow-intensity)) #ffab00, 
-    0 0 calc(5 * var(--glow-intensity)) #ffab00, 
-    0 0 calc(6 * var(--glow-intensity)) #ffab00, 
-    0 0 calc(7 * var(--glow-intensity)) #ffab00;
+  transition: color 0.5s, text-shadow 0.5s;
+  text-shadow: 0 0 var(--glow-intensity) #ffab00, 0 0 calc(2 * var(--glow-intensity)) #ffab00, 0 0 calc(3 * var(--glow-intensity)) #ffab00, 0 0 calc(4 * var(--glow-intensity)) #ffab00, 0 0 calc(5 * var(--glow-intensity)) #ffab00, 0 0 calc(6 * var(--glow-intensity)) #ffab00, 0 0 calc(7 * var(--glow-intensity)) #ffab00;
 }
 
 .breached-ascii {
   color: red;
-  text-shadow: 
-    0 0 var(--glow-intensity) red, 
-    0 0 calc(2 * var(--glow-intensity)) red, 
-    0 0 calc(3 * var(--glow-intensity)) red, 
-    0 0 calc(4 * var(--glow-intensity)) red, 
-    0 0 calc(5 * var(--glow-intensity)) red, 
-    0 0 calc(6 * var(--glow-intensity)) red, 
-    0 0 calc(7 * var(--glow-intensity)) red;
+  text-shadow: 0 0 var(--glow-intensity) red, 0 0 calc(2 * var(--glow-intensity)) red, 0 0 calc(3 * var(--glow-intensity)) red, 0 0 calc(4 * var(--glow-intensity)) red, 0 0 calc(5 * var(--glow-intensity)) red, 0 0 calc(6 * var(--glow-intensity)) red, 0 0 calc(7 * var(--glow-intensity)) red;
 }
 
 .safe-ascii {
   color: rgb(23, 194, 0);
-  text-shadow: 
-    0 0 var(--glow-intensity) rgb(23, 194, 0), 
-    0 0 calc(2 * var(--glow-intensity)) rgb(23, 194, 0), 
-    0 0 calc(3 * var(--glow-intensity)) rgb(23, 194, 0), 
-    0 0 calc(4 * var(--glow-intensity)) rgb(23, 194, 0), 
-    0 0 calc(5 * var(--glow-intensity)) rgb(23, 194, 0), 
-    0 0 calc(6 * var(--glow-intensity)) rgb(23, 194, 0), 
-    0 0 calc(7 * var(--glow-intensity)) rgb(23, 194, 0);
+  text-shadow: 0 0 var(--glow-intensity) rgb(23, 194, 0), 0 0 calc(2 * var(--glow-intensity)) rgb(23, 194, 0), 0 0 calc(3 * var(--glow-intensity)) rgb(23, 194, 0), 0 0 calc(4 * var(--glow-intensity)) rgb(23, 194, 0), 0 0 calc(5 * var(--glow-intensity)) rgb(23, 194, 0), 0 0 calc(6 * var(--glow-intensity)) rgb(23, 194, 0), 0 0 calc(7 * var(--glow-intensity)) rgb(23, 194, 0);
 }
 
 .App-header {
-  font-size: 1.05em; /* Adjusted for smaller width */
+  font-size: 1.05em;
   margin-bottom: 40px;
 }
 
@@ -219,7 +198,7 @@ html, body {
 .input-container, .hash-container, .final-container {
   display: flex;
   flex-direction: column;
-  width: 100%; /* Ensure it takes full width of the container */
+  width: 100%;
 }
 
 button {
@@ -228,36 +207,36 @@ button {
 }
 
 .input-container input {
-  font-size: 1.05em;
+  font-size: 3vh;
   margin: 0.5em 0;
   padding-left: 15px;
   border: none;
   border-left: 1px solid white;
   background-color: transparent;
   color: white;
-  width: 100%; /* Ensure it takes full width of the container */
-  box-sizing: border-box; /* Include padding in the element's total width and height */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .input-container button {
   background-color: transparent;
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.123), transparent);
-  font-size: 1.05em;
+  font-size: 2.8vh;
   text-align: left;
   border: none;
   border-left: 3px solid white;
   margin-top: 20px;
   padding: 0.5em 1em;
   cursor: pointer;
-  width: 100%; /* Ensure it takes full width of the container */
+  width: 100%;
 }
 
 .hash-container pre {
   white-space: pre-wrap;
-  width: 100%; /* Ensure the hash is displayed in equal length lines */
+  width: 100%;
   word-break: break-all;
-  font-size: 1.05em;
-  margin: 0px;
+  font-size: 1.5vh;
+  margin: 0;
   margin-bottom: 20px;
   color: rgb(255,162,0);
   font-weight: bold;
@@ -266,15 +245,16 @@ button {
 .yourPass {
   margin-bottom: 15px;
   font-weight: bold;
+  font-size: 2.8vh;
 }
 
 .final-container .password-result {
-  font-size: 1.05em; /* Adjusted for smaller width */
-  margin-top: 0px;
+  font-size: 2.8vh;
+  margin-top: 0;
   color: rgb(255,162,0);
   font-weight: bold;
-  word-break: break-all; /* Ensure long passwords break into the next line if necessary */
-  white-space: pre-wrap; /* Maintain whitespace for new lines */
+  word-break: break-all;
+  white-space: pre-wrap;
 }
 
 .breached-password {
@@ -287,13 +267,13 @@ button {
 
 .buttons-container {
   display: flex;
-  flex-direction: column; /* Default to column layout */
+  flex-direction: column;
 }
 
 .buttons-container button {
   background-color: transparent;
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.123), transparent);
-  font-size: 1.05em;
+  font-size: 2.8vh;
   text-align: left;
   border: none;
   border-left: 3px solid white;
@@ -301,31 +281,31 @@ button {
   margin-bottom: 10px;
   width: 100%;
   color: white;
-  flex: 1; /* Ensure buttons share available space equally */
+  flex: 1;
   cursor: pointer;
 }
 
 /* Grid layout class for buttons */
 .grid-layout .buttons-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three buttons side by side */
-  gap: 0.25em; /* Adjust gap between buttons */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.25em;
 }
 
 .grid-layout .buttons-container button {
-  margin-bottom: 0; /* Remove the bottom margin for grid layout */
+  margin-bottom: 0;
 }
 
 /* Apply grid layout on smaller screens in landscape orientation */
 @media (max-width: 768px) and (orientation: landscape) {
   .buttons-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three buttons side by side */
-    gap: 0.25em; /* Adjust gap between buttons */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25em;
   }
 
   .buttons-container button {
-    margin-bottom: 0; /* Remove the bottom margin for grid layout */
+    margin-bottom: 0;
   }
 }
 
@@ -388,11 +368,9 @@ button {
 
 @media (max-width: 600px) {
   .box {
-    --mask:
-      radial-gradient(72.05px at 50% calc(100% + 64px),#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) calc(50% - 64px) calc(50% - 16.5px + .5px)/128px 33px ,
-      radial-gradient(72.05px at 50% -64px,#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) 50% calc(50% + 16.5px)/128px 33px ;
+    --mask: radial-gradient(72.05px at 50% calc(100% + 64px),#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) calc(50% - 64px) calc(50% - 16.5px + .5px)/128px 33px, radial-gradient(72.05px at 50% -64px,#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) 50% calc(50% + 16.5px)/128px 33px;
     -webkit-mask: var(--mask);
-            mask: var(--mask);
+    mask: var(--mask);
     height: 100%;
     width: 100%;
     background-image: linear-gradient(to right, #272727, #666666);
@@ -402,16 +380,13 @@ button {
 }
 
 /* Increase the size of .box on larger screens in landscape mode */
-/* Increase the size of .box on all larger screens in landscape mode */
 @media (min-width: 268px) and (orientation: landscape) {
   .box {
-    --mask:
-      radial-gradient(72.05px at 50% calc(100% + 64px),#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) calc(50% - 64px) calc(50% - 16.5px + .5px)/128px 33px,
-      radial-gradient(72.05px at 50% -64px,#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) 50% calc(50% + 16.5px)/128px 33px;
+    --mask: radial-gradient(72.05px at 50% calc(100% + 64px),#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) calc(50% - 64px) calc(50% - 16.5px + .5px)/128px 33px, radial-gradient(72.05px at 50% -64px,#0000 calc(99% - 1px),#000 calc(101% - 1px) 99%,#0000 101%) 50% calc(50% + 16.5px)/128px 33px;
     -webkit-mask: var(--mask);
-            mask: var(--mask);
-    height: 200%; /* Increase height for larger screens */
-    width: 200%;  /* Increase width for larger screens */
+    mask: var(--mask);
+    height: 200%;
+    width: 200%;
     background-image: linear-gradient(to right, #272727, #666666);
     position: absolute;
     z-index: -1;
