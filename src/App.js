@@ -424,7 +424,7 @@ const asciiArt = `
             </div>
           ) : stage === 'hash' ? (
             <div className={`hash-container ${animationClass}`}>
-              <div className='yourPass' ref={progressMessageRef}>{progressMessage}</div>
+              <div className='yourPass' style={{ fontSize: "1.05em" }} ref={progressMessageRef}>{progressMessage}</div>
               <div className={`progress-container ${passwordStatus ? passwordStatus + '-progress' : 'default-progress'}`}>
                 {Array.from({ length: 5 }).map((_, index) => (
                   <React.Fragment key={index}>
