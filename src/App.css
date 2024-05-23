@@ -266,6 +266,7 @@ button {
 .yourPass {
   margin-bottom: 15px;
   font-weight: bold;
+  font-size: 1.05em;
 }
 
 .final-container .password-result {
