@@ -4,13 +4,9 @@ import { Eye, EyeOff, AlertTriangle } from 'react-feather';
 import jsSHA from 'jssha';
 import seedrandom from 'seedrandom';
 import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faWindows, faApple, faLinux, faAndroid } from '@fortawesome/free-brands-svg-icons';
+import PwaLogo from './pwa.svg'; // Import the SVG file
 import './App.css';
-
-const Loader = () => {
-  return (
-    <div className="loader"></div>
-  );
-}
 
 function App() {
   const [masterKey, setMasterKey] = useState('');
@@ -29,7 +25,6 @@ function App() {
   const [backgroundTransition, setBackgroundTransition] = useState('default-bg');
   const [loading, setLoading] = useState(true);
   const [overlayActive, setOverlayActive] = useState(true);
-  const [loaderClass, setLoaderClass] = useState("");
   const [progress, setProgress] = useState(0);
   const [progressMessage, setProgressMessage] = useState('');
 
@@ -40,23 +35,6 @@ function App() {
   const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const lowerCase = "abcdefghijklmnopqrstuvwxyz";
   const numbers = "0123456789";
-
-  useEffect(() => {
-    if (!loading) {
-      setTimeout(() => {
-        setOverlayActive(false);
-      }, 800);
-    }
-  }, [loading]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoaderClass("loader-fade-out");
-      setTimeout(() => setLoading(false), 800);
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const generateSHA256Hash = async (input) => {
     const encoder = new TextEncoder();
@@ -85,24 +63,24 @@ function App() {
 
     let passwordArray = [];
 
-    setProgressMessage('Adding special characters...');
+    setProgressMessage('Stage 1...');
     passwordArray.push(getRandomCharacter(specialCharacters, rng));
     setProgress(20);
 
-    setProgressMessage('Adding uppercase letters...');
+    setProgressMessage('Stage 2...');
     passwordArray.push(getRandomCharacter(upperCase, rng));
     setProgress(40);
 
-    setProgressMessage('Adding lowercase letters...');
+    setProgressMessage('Stage 3...');
     passwordArray.push(getRandomCharacter(lowerCase, rng));
     setProgress(60);
 
-    setProgressMessage('Adding numbers...');
+    setProgressMessage('Stage 4...');
     passwordArray.push(getRandomCharacter(numbers, rng));
     setProgress(80);
 
     const allCharacters = specialCharacters + upperCase + lowerCase + numbers;
-    setProgressMessage('Generating remaining characters...');
+    setProgressMessage('Stage 5...');
     for (let i = 4; i < 32; i++) {
       passwordArray.push(getRandomCharacter(allCharacters, rng));
     }
@@ -127,14 +105,14 @@ function App() {
   };
 
   const generateFinalPassword = async (key, site) => {
-    setProgressMessage('Generating final password...');
+    setProgressMessage('Finishing.....');
     const finalPassword = generateRandomPassword(key, site);
     const formattedPassword = formatPassword(finalPassword);
     setPassword(formattedPassword);
     setDisplayedPassword(formatPassword('*'.repeat(32)));
     setAnimationClass('fade-out-up');
 
-    setProgressMessage('Checking password for breach...');
+    setProgressMessage('Checking...');
     if (navigator.onLine) {
       console.log('Online: Checking password status...');
       const status = await checkPasswordPwned(finalPassword);
@@ -149,7 +127,7 @@ function App() {
       setStage('final');
       setAnimationClass('fade-in-down');
       setProgress(100);
-      setProgressMessage('Password generation complete!');
+      setProgressMessage('Done!');
     }, 500);
   };
 
@@ -163,9 +141,9 @@ function App() {
   };
 
   const formatPassword = (password) => {
-    const partLength = 8;
+    const partLength = 16;
     const lines = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 2; i++) {
       lines.push(password.substring(i * partLength, (i + 1) * partLength));
     }
     return lines.join('\n');
@@ -177,7 +155,7 @@ function App() {
       setStage('hash');
       setAnimationClass('fade-in-down');
       animateHashGeneration(masterKey, site);
-    }, 500);
+    }, 0);
   };
 
   const handleClear = () => {
@@ -202,7 +180,7 @@ function App() {
         safeLayer.style.opacity = '0';
         breachedLayer.style.opacity = '0';
       }
-    }, 500);
+    }, 0);
   };
 
   const handleCopy = () => {
@@ -222,7 +200,7 @@ function App() {
       if (revealIndex === 32) {
         clearInterval(interval);
       }
-    }, 5);
+    }, 10);
   };
 
   const hidePassword = () => {
@@ -234,7 +212,7 @@ function App() {
       if (hideIndex < 0) {
         clearInterval(interval);
       }
-    }, 5);
+    }, 10);
   };
 
   const togglePasswordVisibility = () => {
@@ -359,7 +337,12 @@ function App() {
     console.log('%cDO NOT PASTE ANYTHING HERE!', 'font-size:40px;color:red;background-color:black;border:5px solid black;');
   }, []);
 
-const asciiArt = `
+  useEffect(() => {
+    const isSupported = supportsRequiredFeatures();
+    setFeatureSupported(isSupported);
+  }, []);
+
+  const asciiArt = `
          __    _____                    
   ____  / /_  / __(_)________ ___  ____ 
  / __ \\/ __ \\/ /_/ / ___/ __ \`__ \\/ __ \\
@@ -372,7 +355,7 @@ const asciiArt = `
       <div className="unsupported-warning">
         <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '60px' }} />
         <h1>Unsupported Browser</h1>
-        <p>Your browser does not support the essential features that are needed for Zodiac Obfirmo to work properly. Please update your browser or switch to a newer browser.</p>
+        <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p>
       </div>
     );
   }
@@ -388,7 +371,6 @@ const asciiArt = `
 
   return (
     <div className="App">
-      {overlayActive && <div className="overlay"></div>}
       <div className='fade-overlay'></div>
       <div className="tilt-container">
         <div className="box">
@@ -418,7 +400,7 @@ const asciiArt = `
                 value={site}
                 onChange={(e) => setSite(e.target.value)}
               />
-              <button onClick={handleUnlock}>
+              <button style={{ border: "1px solid white" }} onClick={handleUnlock}>
                 <FontAwesomeIcon icon={faUnlock} />
               </button>
             </div>
@@ -451,13 +433,13 @@ const asciiArt = `
               </div>
               <pre className={`password-result ${passwordStatus === 'breached' ? 'breached-password' : passwordStatus === 'safe' ? 'safe-password' : ''}`}>{displayedPassword}</pre>
               <div className="buttons-container" ref={buttonsContainerRef}>
-                <button onClick={togglePasswordVisibility}>
+                <button style={{ borderLeft: "1px solid white", borderTop: "1px solid white", borderRight: "none", borderLeft: "1px solid white", borderBottom: "1px solid white" }} onClick={togglePasswordVisibility}>
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </button>
-                <button onClick={handleCopy}>
+                <button style={{ borderLeft: "none", borderTop: "1px solid white", borderRight: "none", borderLeft: "none", borderBottom: "1px solid white" }} onClick={handleCopy}>
                   <FontAwesomeIcon icon={copyIcon} /> {/* Use the dynamic copyIcon */}
                 </button>
-                <button onClick={handleClear}>
+                <button style={{ borderLeft: "none", borderTop: "1px solid white", borderRight: "1px solid white", borderLeft: "none", borderBottom: "1px solid white" }} onClick={handleClear}>
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
               </div>
@@ -465,6 +447,9 @@ const asciiArt = `
           )}
         </div>
       </div>
+      <footer className="app-footer">
+        ZodSec 2024
+      </footer>
     </div>
   );
 }
