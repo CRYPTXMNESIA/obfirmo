@@ -141,12 +141,7 @@ function App() {
   };
 
   const formatPassword = (password) => {
-    const partLength = 16;
-    const lines = [];
-    for (let i = 0; i < 2; i++) {
-      lines.push(password.substring(i * partLength, (i + 1) * partLength));
-    }
-    return lines.join('\n');
+    return password.slice(0, 32);
   };
 
   const handleUnlock = () => {
@@ -350,15 +345,7 @@ function App() {
 \\____/_.___/_/ /_/_/  /_/ /_/ /_/\\____/ 
 `;
 
-  if (!featureSupported) {
-    return (
-      <div className="unsupported-warning">
-        <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '60px' }} />
-        <h1>Unsupported Browser</h1>
-        <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p>
-      </div>
-    );
-  }
+  // if (!featureSupported) { return ( <div className="unsupported-warning"> <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '60px' }} /> <h1>Unsupported Browser</h1> <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p> </div> ); }
 
   const generateTestPassword = (status) => {
     const testPassword = status === 'safe' ? 'SafeTestPassword123!' : 'BreachedTestPassword456!';
@@ -400,7 +387,7 @@ function App() {
                 value={site}
                 onChange={(e) => setSite(e.target.value)}
               />
-              <button style={{ border: "1px solid white" }} onClick={handleUnlock}>
+              <button style={{ border: "1px solid #bebebe" }} onClick={handleUnlock}>
                 <FontAwesomeIcon icon={faUnlock} />
               </button>
             </div>
@@ -420,11 +407,10 @@ function App() {
             </div>
           ) : (
             <div className={`final-container ${animationClass}`}>
-              <pre className={`password-result ${passwordStatus === 'breached' ? 'breached-password' : passwordStatus === 'safe' ? 'safe-password' : ''}`}>{displayedPassword}</pre>
               <div className='yourPass'>
                 {isOnline && passwordStatus !== null ? (
                   passwordStatus === 'safe' ? (
-                    <span><span style={{ color: "rgb(23, 194, 0)" }}>&gt; STATUS: SAFE &lt;</span></span>
+                    <span><span style={{ color: "rgb(0, 95, 133)" }}>&gt; STATUS: SAFE &lt;</span></span>
                   ) : (
                     <span><span style={{ color: "red" }}>&gt; STATUS: PWNED &lt;</span></span>
                   )
@@ -432,14 +418,21 @@ function App() {
                   <span>&gt; STATUS: OFFLINE &lt;</span>
                 )}
               </div>
+              <input
+                type="text"
+                className={`password-result ${passwordStatus === 'breached' ? 'breached-password' : passwordStatus === 'safe' ? 'safe-password' : ''}`}
+                value={displayedPassword}
+                readOnly
+                style={{ width: '100%', textAlign: 'left' }}
+              />
               <div className="buttons-container" ref={buttonsContainerRef}>
-                <button style={{ borderLeft: "1px solid white", borderTop: "1px solid white", borderRight: "none", borderLeft: "1px solid white", borderBottom: "1px solid white" }} onClick={togglePasswordVisibility}>
+                <button style={{ borderLeft: "1px solid #bebebe", borderTop: "1px solid #bebebe", borderRight: "none", borderLeft: "1px solid #bebebe", borderBottom: "1px solid #bebebe" }} onClick={togglePasswordVisibility}>
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </button>
-                <button style={{ borderLeft: "none", borderTop: "1px solid white", borderRight: "none", borderLeft: "none", borderBottom: "1px solid white" }} onClick={handleCopy}>
+                <button style={{ borderLeft: "none", borderTop: "1px solid #bebebe", borderRight: "none", borderLeft: "none", borderBottom: "1px solid #bebebe" }} onClick={handleCopy}>
                   <FontAwesomeIcon icon={copyIcon} /> {/* Use the dynamic copyIcon */}
                 </button>
-                <button style={{ borderLeft: "none", borderTop: "1px solid white", borderRight: "1px solid white", borderLeft: "none", borderBottom: "1px solid white" }} onClick={handleClear}>
+                <button style={{ borderLeft: "none", borderTop: "1px solid #bebebe", borderRight: "1px solid #bebebe", borderLeft: "none", borderBottom: "1px solid #bebebe" }} onClick={handleClear}>
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
               </div>
