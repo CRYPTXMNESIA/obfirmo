@@ -423,7 +423,7 @@ function App() {
                 className={`password-result ${passwordStatus === 'breached' ? 'breached-password' : passwordStatus === 'safe' ? 'safe-password' : ''}`}
                 value={displayedPassword}
                 readOnly
-                style={{ width: '100%', textAlign: 'left' }}
+                style={{ width: '100%', textAlign: 'left', overflowX: 'auto' }}
               />
               <div className="buttons-container" ref={buttonsContainerRef}>
                 <button style={{ borderLeft: "1px solid #bebebe", borderTop: "1px solid #bebebe", borderRight: "none", borderLeft: "1px solid #bebebe", borderBottom: "1px solid #bebebe" }} onClick={togglePasswordVisibility}>
