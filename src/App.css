@@ -34,6 +34,7 @@ body {
   align-items: flex-start; /* Changed from center to flex-start */
   height: 100vh;
   padding-top: 5px; /* Added padding to prevent content from being too close to the top */
+  overflow: hidden;
 }
 
 .App {
@@ -56,6 +57,7 @@ body {
   align-items: center;
   flex: 1;
   justify-content: center;
+  overflow: hidden;
 }
 
 .input-container, .hash-container, .final-container {
