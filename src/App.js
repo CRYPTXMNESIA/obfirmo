@@ -345,7 +345,7 @@ function App() {
 \\____/_.___/_/ /_/_/  /_/ /_/ /_/\\____/ 
 `;
 
-  // if (!featureSupported) { return ( <div className="unsupported-warning"> <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '60px' }} /> <h1>Unsupported Browser</h1> <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p> </div> ); }
+  if (!featureSupported) { return ( <div className="unsupported-warning"> <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '60px' }} /> <h1>Unsupported Browser</h1> <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p> </div> ); }
 
   const generateTestPassword = (status) => {
     const testPassword = status === 'safe' ? 'SafeTestPassword123!' : 'BreachedTestPassword456!';
