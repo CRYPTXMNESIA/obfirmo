@@ -114,7 +114,7 @@ button {
 
 .final-container .password-result {
   font-size: 1.2em;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   white-space: pre-wrap;
   word-break: break-all;
 }
