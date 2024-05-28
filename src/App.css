@@ -80,6 +80,7 @@ input {
 
 button {
   width: 100%;
+  font-size: 0.9rem;
   padding: 10px;
   margin-bottom: 1rem;
   background: transparent;
