@@ -162,7 +162,6 @@ input:focus {
   height: 4px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 0%;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .progress-connector {
