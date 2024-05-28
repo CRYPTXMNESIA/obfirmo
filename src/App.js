@@ -424,12 +424,12 @@ function App() {
               <div className='yourPass'>
                 {isOnline && passwordStatus !== null ? (
                   passwordStatus === 'safe' ? (
-                    <span><span style={{ color: "rgb(23, 194, 0)" }}>[ STATUS: SAFE ]</span></span>
+                    <span><span style={{ color: "rgb(23, 194, 0)" }}>&gt; STATUS: SAFE &lt;</span></span>
                   ) : (
-                    <span><span style={{ color: "red" }}>[ STATUS: PWNED ]</span></span>
+                    <span><span style={{ color: "red" }}>&gt; STATUS: PWNED &lt;</span></span>
                   )
                 ) : (
-                  <span>[ STATUS: OFFLINE ]</span>
+                  <span>&gt; STATUS: OFFLINE &lt;</span>
                 )}
               </div>
               <div className="buttons-container" ref={buttonsContainerRef}>
