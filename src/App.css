@@ -33,7 +33,7 @@ body {
   justify-content: center;
   align-items: flex-start; /* Changed from center to flex-start */
   height: 100vh;
-  padding-top: 5px; /* Added padding to prevent content from being too close to the top */
+  padding-top: 0px; /* Added padding to prevent content from being too close to the top */
   overflow: hidden;
 }
 
