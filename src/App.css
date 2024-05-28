@@ -102,7 +102,7 @@ button {
 }
 
 .ascii-art {
-  font-size: 0.58em; /* Adjusted font size */
+  font-size: 0.6em; /* Adjusted font size */
   line-height: 1.2;
   white-space: pre;
   margin-bottom: 1rem;
