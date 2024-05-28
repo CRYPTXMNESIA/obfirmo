@@ -122,7 +122,7 @@ button {
   text-align: left;
   padding: 5px;
   box-sizing: border-box;
-  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-x: auto !important; /* Enable horizontal scrolling */
   -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile */
 }
 
