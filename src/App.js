@@ -448,7 +448,7 @@ function App() {
         </div>
       </div>
       <footer className="app-footer">
-        Made with <3 by ZODSEC
+        Made with &lt;3 by ZODSEC
       </footer>
     </div>
   );
