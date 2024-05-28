@@ -448,7 +448,7 @@ function App() {
         </div>
       </div>
       <footer className="app-footer">
-        ZodSec 2024
+        Made with <3 by ZODSEC
       </footer>
     </div>
   );
