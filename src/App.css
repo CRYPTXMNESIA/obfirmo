@@ -117,11 +117,13 @@ button {
 .final-container .password-result {
   font-size: 1.2em;
   margin-bottom: 0.75rem;
-  white-space: nowrap;
+  white-space: nowrap; /* Ensure the text does not wrap */
   border: 1px solid #bebebe;
   text-align: left;
   padding: 5px;
   box-sizing: border-box;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile */
 }
 
 .buttons-container {
