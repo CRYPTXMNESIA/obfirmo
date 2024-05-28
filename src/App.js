@@ -420,6 +420,7 @@ function App() {
             </div>
           ) : (
             <div className={`final-container ${animationClass}`}>
+              <pre className={`password-result ${passwordStatus === 'breached' ? 'breached-password' : passwordStatus === 'safe' ? 'safe-password' : ''}`}>{displayedPassword}</pre>
               <div className='yourPass'>
                 {isOnline && passwordStatus !== null ? (
                   passwordStatus === 'safe' ? (
@@ -431,7 +432,6 @@ function App() {
                   <span>[ STATUS: OFFLINE ]</span>
                 )}
               </div>
-              <pre className={`password-result ${passwordStatus === 'breached' ? 'breached-password' : passwordStatus === 'safe' ? 'safe-password' : ''}`}>{displayedPassword}</pre>
               <div className="buttons-container" ref={buttonsContainerRef}>
                 <button style={{ borderLeft: "1px solid white", borderTop: "1px solid white", borderRight: "none", borderLeft: "1px solid white", borderBottom: "1px solid white" }} onClick={togglePasswordVisibility}>
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
