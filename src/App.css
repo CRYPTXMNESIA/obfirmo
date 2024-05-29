@@ -231,6 +231,12 @@ input:focus {
   margin: 0 5px;
 }
 
+@media all and (orientation:landscape) {
+ .app-footer {
+    display: none;
+  }
+}
+
 .footer-icons {
   display: flex;
   align-items: center;
@@ -276,22 +282,4 @@ input:focus {
 
 .nothing {
   color: rgb(0, 95, 133);
-}
-
-.infinity {
-  height: 150px;
-  margin-bottom: -50px;
-  margin-top: -40px;
-}
-
-.infinity-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #0b0d11;
-}
-
-.infinity svg {
-  display: block;
-  margin: auto;
 }
