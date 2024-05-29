@@ -451,7 +451,7 @@ function App() {
                 <FontAwesomeIcon icon={faInfoCircle} />
               </button>
               {infoVisible && (
-                <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '55px' }}>
+                <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '25px' }}>
                   <h2>About Obfirmo</h2>
                   <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, site, and salt.</p>
                   <h3 style={{ marginTop: '10px' }}>Advantages</h3>
