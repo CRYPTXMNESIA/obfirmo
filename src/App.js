@@ -388,7 +388,7 @@ function App() {
                 onChange={(e) => setMasterKey(e.target.value)}
               />
               <input
-                type="text"
+                type="password"
                 placeholder="Salt" // New salt input field
                 value={salt}
                 className="salt-input"
