@@ -7,6 +7,7 @@
   appearance: none !important;
   border-radius: 0;
   outline: none;
+  overflow-x: hidden;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -21,8 +22,7 @@
 }
 
 html, body {
-  height: 100%;
-  overflow: hidden;
+  overflow: auto; /* Prevent double scroll */
   background-color: #0b0d11 !important;
   color: #bebebe;
 }
@@ -31,22 +31,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start; /* Changed from center to flex-start */
-  height: 100vh;
   padding-top: 0px; /* Added padding to prevent content from being too close to the top */
-
+  overflow: auto;
 }
 
 .App {
   text-align: center;
   width: 100%;
   max-width: 450px;
-  height: auto; /* Changed from 100% to auto */
-  overflow: auto;
+  overflow-y: auto; /* Enable vertical scrolling */
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* Changed from space-between to flex-start */
   padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
   position: relative; /* Added relative positioning */
 }
 
@@ -56,7 +53,7 @@ body {
   align-items: center;
   flex: 1;
   justify-content: center;
-  overflow: hidden;
+  overflow: auto; /* Prevent double scroll */
 }
 
 .input-container, .hash-container, .final-container {
@@ -107,8 +104,8 @@ button {
   line-height: 1.2;
   white-space: pre;
   margin-top: 5px;
-  margin-bottom: 15px;
-  overflow: hidden;
+  margin-bottom: 10px;
+  overflow: auto;
   text-align: center; /* Center align the ASCII art */
   color: #bebebe;
 }
@@ -211,48 +208,6 @@ input:focus {
   height: 100%;
 }
 
-.app-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Center align the content */
-  box-sizing: border-box;
-  padding: 15px 10px; /* Increase padding for better spacing */
-  background: #111; /* Add a gradient background */
-  color: #666;
-  border-top: 2px solid #222; /* Thicker border for better separation */
-  width: 100%; /* Ensure it spans the full width */
-  position: fixed; /* Use fixed to ensure it stays at the bottom */
-  bottom: 0;
-  left: 0; /* Ensure it starts from the left edge */
-  z-index: 1000; /* Ensure it stays on top */
-}
-
-.app-footer span {
-  margin: 0 5px;
-}
-
-@media all and (orientation:landscape) {
- .app-footer {
-    display: none;
-  }
-}
-
-.footer-icons {
-  display: flex;
-  align-items: center;
-}
-
-.footer-icons .fa-icon {
-  margin: 0 8px; /* Increase margin for better spacing between icons */
-  font-size: 1.2em; /* Increase icon size */
-}
-
-.pwa-logo {
-  margin: 0 8px;; /* Adjust margin for spacing */
-  width: 30px; /* Adjust width as needed */
-  height: 30px; /* Adjust height as needed */
-}
-
 .unsupported-warning {
   display: flex;
   flex-direction: column;
@@ -282,4 +237,55 @@ input:focus {
 
 .nothing {
   color: rgb(0, 95, 133);
+}
+
+/* Hide arrows in input type number for Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
+/* Hide arrows in input type number for Firefox */
+input[type="number"] {
+    -moz-appearance: textfield !important;
+}
+
+.info-section {
+  background-color: transparent !important;
+  color: #bebebe;
+  margin-top: 10px;
+  max-width: 280px !important;
+  width: 280px !important;
+  text-align: left;
+}
+
+.info-section h2, .info-section h3 {
+  color: #bebebe;
+  text-decoration: underline;
+}
+
+.info-section ul {
+  padding-left: 20px;
+}
+
+.info-section p {
+  margin: 10px 0;
+}
+
+.info-section strong {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.info-section span {
+  color: rgb(0, 95, 133);
+}
+
+.zodsec-link {
+  text-decoration: underline;
+  color: rgb(0, 95, 133);
+  cursor: pointer;
 }

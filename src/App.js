@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Eye, EyeOff, AlertTriangle } from 'react-feather';
 import jsSHA from 'jssha';
 import seedrandom from 'seedrandom';
-import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faWindows, faApple, faLinux, faAndroid } from '@fortawesome/free-brands-svg-icons';
 import PwaLogo from './pwa.svg'; // Import the SVG file
 import './App.css';
@@ -11,7 +11,8 @@ import './App.css';
 function App() {
   const [masterKey, setMasterKey] = useState('');
   const [site, setSite] = useState('');
-  const [salt, setSalt] = useState(''); // New state for salt
+  const [salt, setSalt] = useState('');
+  const [length, setLength] = useState(32); // New state for length
   const [hash, setHash] = useState('');
   const [password, setPassword] = useState('');
   const [displayedPassword, setDisplayedPassword] = useState('');
@@ -22,6 +23,7 @@ function App() {
   const [copyIcon, setCopyIcon] = useState(faCopy);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [passwordStatus, setPasswordStatus] = useState(null);
+  const [infoVisible, setInfoVisible] = useState(false); // New state for info visibility
   const buttonsContainerRef = useRef(null);
   const [backgroundTransition, setBackgroundTransition] = useState('default-bg');
   const [loading, setLoading] = useState(true);
@@ -31,6 +33,7 @@ function App() {
 
   const progressBarRef = useRef(null);
   const progressMessageRef = useRef(null);
+  const infoSectionRef = useRef(null);
 
   const specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~";
   const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -58,7 +61,7 @@ function App() {
     return array;
   };
 
-  const generateRandomPassword = (key, site, salt) => {
+  const generateRandomPassword = (key, site, salt, length) => {
     const combinedString = key + site + salt; // Combine key, site, and salt
     const rng = seedrandom(combinedString);
 
@@ -82,7 +85,7 @@ function App() {
 
     const allCharacters = specialCharacters + upperCase + lowerCase + numbers;
     setProgressMessage('Stage 5...');
-    for (let i = 4; i < 32; i++) {
+    for (let i = 4; i < length; i++) {
       passwordArray.push(getRandomCharacter(allCharacters, rng));
     }
 
@@ -105,12 +108,12 @@ function App() {
     return pwned ? 'breached' : 'safe';
   };
 
-  const generateFinalPassword = async (key, site, salt) => {
+  const generateFinalPassword = async (key, site, salt, length) => {
     setProgressMessage('Finishing.....');
-    const finalPassword = generateRandomPassword(key, site, salt); // Pass salt to the function
-    const formattedPassword = formatPassword(finalPassword);
+    const finalPassword = generateRandomPassword(key, site, salt, length); // Pass salt and length to the function
+    const formattedPassword = formatPassword(finalPassword, length);
     setPassword(formattedPassword);
-    setDisplayedPassword(formatPassword('*'.repeat(32)));
+    setDisplayedPassword(formatPassword('*'.repeat(length)));
     setAnimationClass('fade-out-up');
 
     setProgressMessage('Checking...');
@@ -132,34 +135,40 @@ function App() {
     }, 500);
   };
 
-  const animateHashGeneration = async (key, site, salt) => {
+  const animateHashGeneration = async (key, site, salt, length) => {
     setProgress(0);
     setProgressMessage('Initializing...');
     await new Promise(resolve => setTimeout(resolve, 500));
     setProgress(10);
   
-    await generateFinalPassword(key, site, salt); // Pass salt to the function
+    await generateFinalPassword(key, site, salt, length); // Pass salt and length to the function
   };
 
-  const formatPassword = (password) => {
-    return password.slice(0, 32);
+  const formatPassword = (password, length) => {
+    return password.slice(0, length);
   };
 
   const handleUnlock = () => {
+    if (length < 8 || length > 128) {
+      alert('Password length must be between 8 and 128 characters.');
+      return;
+    }
+  
     setAnimationClass('fade-out-up');
     setTimeout(() => {
       setStage('hash');
       setAnimationClass('fade-in-down');
-      animateHashGeneration(masterKey, site, salt); // Pass salt to the function
+      animateHashGeneration(masterKey, site, salt, length); // Pass salt and length to the function
     }, 0);
-  };
+  };  
 
   const handleClear = () => {
     setAnimationClass('fade-out-up');
     setTimeout(() => {
       setMasterKey('');
       setSite('');
-      setSalt(''); // Clear salt input
+      setSalt('');
+      setLength(32); // Clear length input
       setHash('');
       setPassword('');
       setDisplayedPassword('');
@@ -192,25 +201,27 @@ function App() {
     let revealIndex = 0;
     const interval = setInterval(() => {
       let currentPassword = password.replace(/\n/g, '');
-      setDisplayedPassword(formatPassword(currentPassword.slice(0, revealIndex + 1) + '*'.repeat(32 - revealIndex - 1)));
-      revealIndex++;
-      if (revealIndex === 32) {
+      if (revealIndex < length) {
+        setDisplayedPassword(formatPassword(currentPassword.slice(0, revealIndex + 1) + '*'.repeat(Math.max(0, length - revealIndex - 1)), length));
+        revealIndex++;
+      } else {
         clearInterval(interval);
       }
     }, 10);
   };
-
+  
   const hidePassword = () => {
-    let hideIndex = 31;
+    let hideIndex = length - 1;
     const interval = setInterval(() => {
       let currentPassword = password.replace(/\n/g, '');
-      setDisplayedPassword(formatPassword(currentPassword.slice(0, hideIndex) + '*'.repeat(32 - hideIndex)));
-      hideIndex--;
-      if (hideIndex < 0) {
+      if (hideIndex >= 0) {
+        setDisplayedPassword(formatPassword(currentPassword.slice(0, hideIndex) + '*'.repeat(Math.max(0, length - hideIndex)), length));
+        hideIndex--;
+      } else {
         clearInterval(interval);
       }
     }, 10);
-  };
+  };  
 
   const togglePasswordVisibility = () => {
     if (showPassword) {
@@ -346,7 +357,7 @@ function App() {
 \\____/_.___/_/ /_/_/  /_/ /_/ /_/\\____/ 
 `;
 
-  if (!featureSupported) { return ( <div className="unsupported-warning"> <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '60px' }} /> <h1>Unsupported Browser</h1> <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p> </div> ); }
+  // if (!featureSupported) { return ( <div className="unsupported-warning"> <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '60px' }} /> <h1>Unsupported Browser</h1> <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p> </div> ); }
 
   const generateTestPassword = (status) => {
     const testPassword = status === 'safe' ? 'SafeTestPassword123!' : 'BreachedTestPassword456!';
@@ -371,7 +382,9 @@ function App() {
         <header style={{ fontWeight: "bold" }} className="App-header">
           <pre className={`ascii-art ${passwordStatus === 'breached' ? 'breached-ascii' : passwordStatus === 'safe' ? 'safe-ascii' : 'default-ascii'}`}>
             {asciiArt}
+            <div style={{ marginTop: '10px', fontSize: "13px" }}>deterministic password manager</div>
           </pre>
+          <div className="ascii-line"></div> {/* Added line under ASCII art */}
         </header>
         <div className="container">
           {stage === 'input' ? (
@@ -398,9 +411,83 @@ function App() {
                 style={{ fontSize: "1.05rem" }}
                 onChange={(e) => setSite(e.target.value)}
               />
+              <input
+                type="number"
+                placeholder="Length"
+                value={length}
+                style={{ fontSize: "1.05rem" }}
+                onChange={(e) => setLength(e.target.value)}
+                onBlur={(e) => {
+                  if (e.target.value === '' || e.target.value < 8) {
+                    setLength(8);
+                  } else if (e.target.value > 128) {
+                    setLength(128);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (!/[0-9]/.test(e.key) && e.key !== 'Backspace') {
+                    e.preventDefault();
+                  }
+                }}
+              />
               <button style={{ border: "1px solid #bebebe" }} onClick={handleUnlock}>
                 <FontAwesomeIcon icon={faUnlock} />
               </button>
+              <button 
+                style={{
+                  border: "1px solid #bebebe",
+                  marginTop: "0px",
+                  backgroundColor: infoVisible ? "#bebebe" : "transparent",
+                  color: infoVisible ? "#0b0d11" : "#bebebe"
+                }} 
+                onClick={() => {
+                  setInfoVisible(!infoVisible);
+                  if (!infoVisible) {
+                    setTimeout(() => {
+                      infoSectionRef.current.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' });
+                    }, 0);
+                  }
+                }}>
+                <FontAwesomeIcon icon={faInfoCircle} />
+              </button>
+              {infoVisible && (
+                <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '55px' }}>
+                  <h2>About Obfirmo</h2>
+                  <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, site, and salt.</p>
+                  <h3 style={{ marginTop: '10px' }}>Advantages</h3>
+                  <ul>
+                    <li>- No need to store passwords, reducing the risk of a single point of failure.</li>
+                    <li>- Easy to generate passwords for any site, ensuring quick and efficient access.</li>
+                    <li>- Passwords are unique and secure, enhancing overall security for each account.</li>
+                    <li>- Operates offline, ensuring data is never exposed to the internet.</li>
+                    <li>- Available as a Progressive Web App (PWA), providing cross-platform accessibility and offline capabilities.</li>
+                  </ul>
+                  <h3 style={{ marginTop: '10px' }}>Challenges</h3>
+                  <ul>
+                    <li>- If the master key is lost, all passwords are irretrievable.</li>
+                    <li>- Exact master key, site, and salt must be remembered precisely for password regeneration.</li>
+                    <li>- Site-specific password rules might require manual adjustments to generated passwords.</li>
+                    <li>- A compromised master password can lead to exposure of all derived passwords.</li>
+                    <li>- No ability to import existing passwords, requiring a fresh setup for all accounts.</li>
+                  </ul>
+                  <h3 style={{ marginTop: '10px' }}>How to Use</h3>
+                  <ul>
+                    <li>1. Enter a strong master key.</li>
+                    <li>2. Optionally enter a salt value for extra security.</li>
+                    <li>3. Enter the site or account name.</li>
+                    <li>4. Specify the desired length of the password.</li>
+                    <li>5. Click the unlock button to generate your password.</li>
+                  </ul>
+                  <p>
+                    <strong>
+                      Made with <span>&lt;3</span> by{' '}
+                      <span className="zodsec-link" onClick={() => window.location.href = 'https://discord.gg/y8y95AXT7r'}>
+                        ZODSEC
+                      </span>
+                    </strong>
+                  </p>
+                </div>
+              )}
             </div>
           ) : stage === 'hash' ? (
             <div className={`hash-container ${animationClass}`}>
@@ -451,9 +538,6 @@ function App() {
           )}
         </div>
       </div>
-      <footer className="app-footer">
-        Made with &lt;3 by ZODSEC
-      </footer>
     </div>
   );
 }
