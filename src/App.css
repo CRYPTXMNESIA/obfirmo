@@ -1,7 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  overflow: hidden;
   font-family: 'Consolas', monospace;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
@@ -34,7 +33,7 @@ body {
   align-items: flex-start; /* Changed from center to flex-start */
   height: 100vh;
   padding-top: 0px; /* Added padding to prevent content from being too close to the top */
-  overflow: hidden;
+
 }
 
 .App {
@@ -42,7 +41,7 @@ body {
   width: 100%;
   max-width: 450px;
   height: auto; /* Changed from 100% to auto */
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* Changed from space-between to flex-start */
@@ -80,7 +79,7 @@ input {
 
 button {
   width: 100%;
-  font-size: 0.85rem;
+  font-size: 1rem;
   padding: 10px;
   margin-bottom: 1rem;
   background: transparent;
@@ -107,6 +106,7 @@ button {
   font-size: 0.72rem; /* Adjusted font size */
   line-height: 1.2;
   white-space: pre;
+  margin-top: 5px;
   margin-bottom: 15px;
   overflow: hidden;
   text-align: center; /* Center align the ASCII art */
@@ -114,9 +114,8 @@ button {
 }
 
 .final-container .password-result {
-  font-size: 1.2em;
+  font-size: 1.2rem;
   margin-bottom: 0.75rem;
-  white-space: nowrap; /* Ensure the text does not wrap */
   border: 1px solid #bebebe;
   text-align: left;
   padding: 5px;
@@ -139,7 +138,7 @@ button {
 }
 
 input:focus {
-  border-bottom: 1px solid #ffab00;
+  border-bottom: 1px solid rgb(0, 95, 133);
 }
 
 .hash-container {
@@ -277,4 +276,22 @@ input:focus {
 
 .nothing {
   color: rgb(0, 95, 133);
+}
+
+.infinity {
+  height: 150px;
+  margin-bottom: -50px;
+  margin-top: -40px;
+}
+
+.infinity-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0b0d11;
+}
+
+.infinity svg {
+  display: block;
+  margin: auto;
 }
