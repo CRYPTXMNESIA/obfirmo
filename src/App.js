@@ -433,7 +433,7 @@ function App() {
               <button style={{ border: "1px solid #bebebe" }} onClick={handleUnlock}>
                 <FontAwesomeIcon icon={faUnlock} />
               </button>
-              <hr style={{ width: "100%", textAlign: "left", marginLeft: "0", marginTop: '15px', color: "#555" }} />
+              <hr style={{ width: "100%", textAlign: "left", marginLeft: "0", marginTop: '15px', color: "#444" }} />
                 <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '15px' }}>
                   <h2>About Obfirmo</h2>
                   <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, site, and salt.</p>
