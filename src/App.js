@@ -433,28 +433,11 @@ function App() {
               <button style={{ border: "1px solid #bebebe" }} onClick={handleUnlock}>
                 <FontAwesomeIcon icon={faUnlock} />
               </button>
-              <button 
-                style={{
-                  border: "1px solid #bebebe",
-                  marginTop: "0px",
-                  backgroundColor: infoVisible ? "#bebebe" : "transparent",
-                  color: infoVisible ? "#0b0d11" : "#bebebe"
-                }} 
-                onClick={() => {
-                  setInfoVisible(!infoVisible);
-                  if (!infoVisible) {
-                    setTimeout(() => {
-                      infoSectionRef.current.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' });
-                    }, 0);
-                  }
-                }}>
-                <FontAwesomeIcon icon={faInfoCircle} />
-              </button>
-              {infoVisible && (
-                <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '10px' }}>
+              <hr style={{ width: "100%", textAlign: "left", marginLeft: "0", marginTop: '15px', color: "#555" }} />
+                <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '15px' }}>
                   <h2>About Obfirmo</h2>
                   <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, site, and salt.</p>
-                  <h3 style={{ marginTop: '10px' }}>Advantages</h3>
+                  <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Advantages</h3>
                   <ul>
                     <li>- No need to store passwords, reducing the risk of a single point of failure.</li>
                     <li>- Easy to generate passwords for any site, ensuring quick and efficient access.</li>
@@ -462,7 +445,7 @@ function App() {
                     <li>- Operates offline, ensuring data is never exposed to the internet.</li>
                     <li>- Available as a Progressive Web App (PWA), providing cross-platform accessibility and offline capabilities.</li>
                   </ul>
-                  <h3 style={{ marginTop: '10px' }}>Challenges</h3>
+                  <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Challenges</h3>
                   <ul>
                     <li>- If the master key is lost, all passwords are irretrievable.</li>
                     <li>- Exact master key, site, and salt must be remembered precisely for password regeneration.</li>
@@ -470,7 +453,7 @@ function App() {
                     <li>- A compromised master password can lead to exposure of all derived passwords.</li>
                     <li>- No ability to import existing passwords, requiring a fresh setup for all accounts.</li>
                   </ul>
-                  <h3 style={{ marginTop: '10px' }}>How to Use</h3>
+                  <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>How to Use</h3>
                   <ul>
                     <li>1. Enter a strong master key.</li>
                     <li>2. Optionally enter a salt value for extra security.</li>
@@ -487,7 +470,6 @@ function App() {
                     </strong>
                   </p>
                 </div>
-              )}
             </div>
           ) : stage === 'hash' ? (
             <div className={`hash-container ${animationClass}`}>
