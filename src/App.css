@@ -254,6 +254,7 @@ input[type="number"] {
 .info-section {
   background-color: transparent !important;
   color: #bebebe;
+  padding: 0px;
   margin-top: 10px;
   max-width: 280px !important;
   width: 280px !important;
