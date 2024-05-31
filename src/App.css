@@ -253,7 +253,7 @@ input[type="number"] {
 
 .info-section {
   background-color: transparent !important;
-  color: #bebebe;
+  color: #8f8f8f;
   padding: 0px;
   margin-top: 10px;
   max-width: 280px !important;
@@ -262,7 +262,7 @@ input[type="number"] {
 }
 
 .info-section h2, .info-section h3 {
-  color: #bebebe;
+  color: #8f8f8f;
   text-decoration: underline;
 }
 
