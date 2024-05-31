@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Eye, EyeOff, AlertTriangle } from 'react-feather';
+import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { AlertTriangle } from 'react-feather'; // Add this line
 import jsSHA from 'jssha';
 import seedrandom from 'seedrandom';
-import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { faWindows, faApple, faLinux, faAndroid } from '@fortawesome/free-brands-svg-icons';
-import PwaLogo from './pwa.svg'; // Import the SVG file
 import './App.css';
 
 function App() {
@@ -149,6 +147,15 @@ function App() {
   };
 
   const handleUnlock = () => {
+    const masterKeyInput = document.getElementById('masterKey');
+    const siteInput = document.getElementById('site');
+  
+    if (!masterKey || !site) {
+      if (!masterKey) masterKeyInput.classList.add('input-error');
+      if (!site) siteInput.classList.add('input-error');
+  
+      return;
+    }
     if (length < 8 || length > 128) {
       alert('Password length must be between 8 and 128 characters.');
       return;
@@ -158,9 +165,9 @@ function App() {
     setTimeout(() => {
       setStage('hash');
       setAnimationClass('fade-in-down');
-      animateHashGeneration(masterKey, site, salt, length); // Pass salt and length to the function
+      animateHashGeneration(masterKey, site, salt, length);
     }, 0);
-  };  
+  };
 
   const handleClear = () => {
     setAnimationClass('fade-out-up');
@@ -350,6 +357,27 @@ function App() {
     setFeatureSupported(isSupported);
   }, []);
 
+  useEffect(() => {
+    const handleInputFocus = (e) => {
+      const input = e.target;
+      input.classList.remove('input-error');
+    };
+  
+    const inputs = document.querySelectorAll('input');
+  
+    inputs.forEach(input => {
+      input.addEventListener('focus', handleInputFocus);
+      input.addEventListener('input', handleInputFocus);
+    });
+  
+    return () => {
+      inputs.forEach(input => {
+        input.removeEventListener('focus', handleInputFocus);
+        input.removeEventListener('input', handleInputFocus);
+      });
+    };
+  }, []);
+
   const asciiArt = `         __    _____                    
   ____  / /_  / __(_)________ ___  ____ 
  / __ \\/ __ \\/ /_/ / ___/ __ \`__ \\/ __ \\
@@ -357,7 +385,7 @@ function App() {
 \\____/_.___/_/ /_/_/  /_/ /_/ /_/\\____/ 
 `;
 
-  if (!featureSupported) { return ( <div className="unsupported-warning"> <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '60px' }} /> <h1>Unsupported Browser</h1> <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p> </div> ); }
+  if (!featureSupported) { return ( <div className="unsupported-warning"> <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '5px' }} /> <h1>Unsupported Browser</h1> <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p> </div> ); }
 
   const generateTestPassword = (status) => {
     const testPassword = status === 'safe' ? 'SafeTestPassword123!' : 'BreachedTestPassword456!';
@@ -391,13 +419,15 @@ function App() {
             <div className={`input-container ${animationClass}`}>
               <input
                 type="password"
-                placeholder="Master Key"
+                id="masterKey"
+                placeholder="* Master Key"
                 value={masterKey}
                 style={{ fontSize: "1.05rem" }}
                 onChange={(e) => setMasterKey(e.target.value)}
               />
               <input
                 type="password"
+                id="salt"
                 placeholder="Salt" // New salt input field
                 value={salt}
                 className="salt-input"
@@ -406,7 +436,8 @@ function App() {
               />
               <input
                 type="text"
-                placeholder="Site/Account"
+                id="site"
+                placeholder="* Site/Account"
                 value={site}
                 style={{ fontSize: "1.05rem" }}
                 onChange={(e) => setSite(e.target.value)}
