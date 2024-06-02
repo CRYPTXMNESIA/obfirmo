@@ -134,10 +134,6 @@ button {
   outline: none;
 }
 
-.overlay, .fade-overlay, .tilt-container {
-  display: none;
-}
-
 input:focus {
   border-bottom: 1px solid rgb(0, 95, 133);
 }
