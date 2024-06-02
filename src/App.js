@@ -16,20 +16,14 @@ function App() {
   const [displayedPassword, setDisplayedPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [stage, setStage] = useState('input');
-  const [animationClass, setAnimationClass] = useState('fade-in-down');
   const [featureSupported, setFeatureSupported] = useState(true);
   const [copyIcon, setCopyIcon] = useState(faCopy);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [passwordStatus, setPasswordStatus] = useState(null);
-  const [infoVisible, setInfoVisible] = useState(false);
   const buttonsContainerRef = useRef(null);
-  const [backgroundTransition, setBackgroundTransition] = useState('default-bg');
-  const [loading, setLoading] = useState(true);
-  const [overlayActive, setOverlayActive] = useState(true);
   const [progress, setProgress] = useState(0);
   const [progressMessage, setProgressMessage] = useState('');
 
-  const progressBarRef = useRef(null);
   const progressMessageRef = useRef(null);
   const infoSectionRef = useRef(null);
 
@@ -37,14 +31,6 @@ function App() {
   const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const lowerCase = "abcdefghijklmnopqrstuvwxyz";
   const numbers = "0123456789";
-
-  const generateSHA256Hash = async (input) => {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(input);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  };
 
   const getRandomCharacter = (characters, rng) => {
     const randomIndex = Math.floor(rng() * characters.length);
@@ -112,7 +98,6 @@ function App() {
     const formattedPassword = formatPassword(finalPassword, length);
     setPassword(formattedPassword);
     setDisplayedPassword(formatPassword('*'.repeat(length)));
-    setAnimationClass('fade-out-up');
 
     setProgressMessage('Checking...');
     if (navigator.onLine) {
@@ -127,7 +112,6 @@ function App() {
 
     setTimeout(() => {
       setStage('final');
-      setAnimationClass('fade-in-down');
       setProgress(100);
       setProgressMessage('Done!');
     }, 500);
@@ -166,17 +150,13 @@ function App() {
       return;
     }
 
-    setAnimationClass('fade-out-up');
     setTimeout(() => {
       setStage('hash');
-      setAnimationClass('fade-in-down');
       animateHashGeneration(masterKey, site, salt, length);
     }, 0);
   };
 
   const handleClear = () => {
-    setAnimationClass('fade-out-up');
-    setTimeout(() => {
       setMasterKey('');
       setSite('');
       setSalt('');
@@ -186,19 +166,7 @@ function App() {
       setDisplayedPassword('');
       setShowPassword(false);
       setStage('input');
-      setAnimationClass('fade-in-down');
       setPasswordStatus(null);
-
-      const asciiArtElement = document.querySelector('.ascii-art');
-      const safeLayer = document.querySelector('.safe-layer');
-      const breachedLayer = document.querySelector('.breached-layer');
-
-      if (asciiArtElement && safeLayer && breachedLayer) {
-        asciiArtElement.classList.remove('breached-ascii', 'safe-ascii');
-        safeLayer.style.opacity = '0';
-        breachedLayer.style.opacity = '0';
-      }
-    }, 0);
   };
 
   const handleCopy = () => {
@@ -297,90 +265,12 @@ function App() {
   }, [password, passwordStatus]);
 
   useEffect(() => {
-    const boxElement = document.querySelector('.box');
-    const safeLayer = document.querySelector('.safe-layer');
-    const breachedLayer = document.querySelector('.breached-layer');
-    const asciiArtElement = document.querySelector('.ascii-art');
-
-    console.log('Password status:', passwordStatus);
-
-    if (boxElement && asciiArtElement && safeLayer && breachedLayer) {
-      asciiArtElement.classList.remove('safe-ascii', 'breached-ascii', 'default-ascii');
-      boxElement.classList.remove('safe-bg', 'breached-bg', 'default-bg');
-
-      // Force reflow
-      void boxElement.offsetWidth;
-
-      if (passwordStatus === 'safe') {
-        safeLayer.style.opacity = '1';
-        breachedLayer.style.opacity = '0';
-        asciiArtElement.classList.add('safe-ascii');
-        console.log('Added safe-bg and safe-ascii classes');
-      } else if (passwordStatus === 'breached') {
-        safeLayer.style.opacity = '0';
-        breachedLayer.style.opacity = '1';
-        asciiArtElement.classList.add('breached-ascii');
-        console.log('Added breached-bg and breached-ascii classes');
-      } else {
-        safeLayer.style.opacity = '0';
-        breachedLayer.style.opacity = '0';
-        asciiArtElement.classList.add('default-ascii');
-        console.log('Added default-bg class');
-      }
-    }
-  }, [passwordStatus]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const buttonsContainer = buttonsContainerRef.current;
-      if (buttonsContainer) {
-        const containerHeight = buttonsContainer.offsetHeight;
-        const windowHeight = window.innerHeight;
-
-        if (containerHeight > windowHeight) {
-          document.body.classList.add('grid-layout');
-        } else {
-          document.body.classList.remove('grid-layout');
-        }
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
     console.log('%cDO NOT PASTE ANYTHING HERE!', 'font-size:40px;color:red;background-color:black;border:5px solid black;');
   }, []);
 
   useEffect(() => {
     const isSupported = supportsRequiredFeatures();
     setFeatureSupported(isSupported);
-  }, []);
-
-  useEffect(() => {
-    const handleInputFocus = (e) => {
-      const input = e.target;
-      input.classList.remove('input-error');
-    };
-
-    const inputs = document.querySelectorAll('input');
-
-    inputs.forEach(input => {
-      input.addEventListener('focus', handleInputFocus);
-      input.addEventListener('input', handleInputFocus);
-    });
-
-    return () => {
-      inputs.forEach(input => {
-        input.removeEventListener('focus', handleInputFocus);
-        input.removeEventListener('input', handleInputFocus);
-      });
-    };
   }, []);
 
   const asciiArt = `         __    _____                    
@@ -400,25 +290,8 @@ function App() {
     );
   }
 
-  const generateTestPassword = (status) => {
-    const testPassword = status === 'safe' ? 'SafeTestPassword123!' : 'BreachedTestPassword456!';
-    const formattedPassword = formatPassword(testPassword.padEnd(32, '*'));
-    setPassword(testPassword);
-    setDisplayedPassword(formattedPassword);
-    setPasswordStatus(status);
-    setStage('final');
-  };
-
   return (
     <div className="App">
-      <div className='fade-overlay'></div>
-      <div className="tilt-container">
-        <div className="box">
-          <div className="layer default-layer"></div>
-          <div className="layer safe-layer"></div>
-          <div className="layer breached-layer"></div>
-        </div>
-      </div>
       <div className="wrapper">
         <header style={{ fontWeight: "bold" }} className="App-header">
           <pre className={`ascii-art ${passwordStatus === 'breached' ? 'breached-ascii' : passwordStatus === 'safe' ? 'safe-ascii' : 'default-ascii'}`}>
@@ -429,7 +302,7 @@ function App() {
         </header>
         <div className="container">
           {stage === 'input' ? (
-            <div className={`input-container ${animationClass}`}>
+            <div className="input-container">
               <input
                 type="password"
                 id="masterKey"
@@ -516,7 +389,7 @@ function App() {
               </div>
             </div>
           ) : stage === 'hash' ? (
-            <div className={`hash-container ${animationClass}`}>
+            <div className="hash-container">
               <div className='yourPass' style={{ fontSize: "1.05em" }} ref={progressMessageRef}>{progressMessage}</div>
               <div className={`progress-container ${passwordStatus ? passwordStatus + '-progress' : 'default-progress'}`}>
                 {Array.from({ length: 5 }).map((_, index) => (
@@ -530,7 +403,7 @@ function App() {
               </div>
             </div>
           ) : (
-            <div className={`final-container ${animationClass}`}>
+            <div className="final-container">
               <div className='yourPass'>
                 {isOnline && passwordStatus !== null ? (
                   passwordStatus === 'safe' ? (
