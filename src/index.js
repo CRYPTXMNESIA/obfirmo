@@ -19,7 +19,7 @@ root.render(
 serviceWorkerRegistration.register({
   onUpdate: (registration) => {
     // Optionally, notify the user and give them the option to refresh immediately
-    if (window.confirm("New version available! Would you like to update?")) {
+    if (window.confirm("New version available! Would you like to install it now?")) {
       const waitingServiceWorker = registration.waiting;
       if (waitingServiceWorker) {
         waitingServiceWorker.addEventListener("statechange", (event) => {
