@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { AlertTriangle } from 'react-feather'; // Add this line
+import { AlertTriangle } from 'react-feather';
 import jsSHA from 'jssha';
 import seedrandom from 'seedrandom';
 import './App.css';
@@ -10,7 +10,7 @@ function App() {
   const [masterKey, setMasterKey] = useState('');
   const [site, setSite] = useState('');
   const [salt, setSalt] = useState('');
-  const [length, setLength] = useState(32); // New state for length
+  const [length, setLength] = useState(32);
   const [hash, setHash] = useState('');
   const [password, setPassword] = useState('');
   const [displayedPassword, setDisplayedPassword] = useState('');
@@ -21,7 +21,7 @@ function App() {
   const [copyIcon, setCopyIcon] = useState(faCopy);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [passwordStatus, setPasswordStatus] = useState(null);
-  const [infoVisible, setInfoVisible] = useState(false); // New state for info visibility
+  const [infoVisible, setInfoVisible] = useState(false);
   const buttonsContainerRef = useRef(null);
   const [backgroundTransition, setBackgroundTransition] = useState('default-bg');
   const [loading, setLoading] = useState(true);
@@ -60,7 +60,7 @@ function App() {
   };
 
   const generateRandomPassword = (key, site, salt, length) => {
-    const combinedString = key + site + salt; // Combine key, site, and salt
+    const combinedString = key + site + salt;
     const rng = seedrandom(combinedString);
 
     let passwordArray = [];
@@ -108,7 +108,7 @@ function App() {
 
   const generateFinalPassword = async (key, site, salt, length) => {
     setProgressMessage('Finishing.....');
-    const finalPassword = generateRandomPassword(key, site, salt, length); // Pass salt and length to the function
+    const finalPassword = generateRandomPassword(key, site, salt, length);
     const formattedPassword = formatPassword(finalPassword, length);
     setPassword(formattedPassword);
     setDisplayedPassword(formatPassword('*'.repeat(length)));
@@ -138,8 +138,8 @@ function App() {
     setProgressMessage('Initializing...');
     await new Promise(resolve => setTimeout(resolve, 500));
     setProgress(10);
-  
-    await generateFinalPassword(key, site, salt, length); // Pass salt and length to the function
+
+    await generateFinalPassword(key, site, salt, length);
   };
 
   const formatPassword = (password, length) => {
@@ -149,18 +149,23 @@ function App() {
   const handleUnlock = () => {
     const masterKeyInput = document.getElementById('masterKey');
     const siteInput = document.getElementById('site');
-  
+
     if (!masterKey || !site) {
       if (!masterKey) masterKeyInput.classList.add('input-error');
       if (!site) siteInput.classList.add('input-error');
-  
       return;
     }
+
+    if (masterKey === site || masterKey === salt || site === salt) {
+      alert('Master Key, Site, and Salt must be unique values.');
+      return;
+    }
+
     if (length < 8 || length > 128) {
       alert('Password length must be between 8 and 128 characters.');
       return;
     }
-  
+
     setAnimationClass('fade-out-up');
     setTimeout(() => {
       setStage('hash');
@@ -175,7 +180,7 @@ function App() {
       setMasterKey('');
       setSite('');
       setSalt('');
-      setLength(32); // Clear length input
+      setLength(32);
       setHash('');
       setPassword('');
       setDisplayedPassword('');
@@ -216,7 +221,7 @@ function App() {
       }
     }, 10);
   };
-  
+
   const hidePassword = () => {
     let hideIndex = length - 1;
     const interval = setInterval(() => {
@@ -228,7 +233,7 @@ function App() {
         clearInterval(interval);
       }
     }, 10);
-  };  
+  };
 
   const togglePasswordVisibility = () => {
     if (showPassword) {
@@ -296,16 +301,16 @@ function App() {
     const safeLayer = document.querySelector('.safe-layer');
     const breachedLayer = document.querySelector('.breached-layer');
     const asciiArtElement = document.querySelector('.ascii-art');
-  
+
     console.log('Password status:', passwordStatus);
-  
+
     if (boxElement && asciiArtElement && safeLayer && breachedLayer) {
       asciiArtElement.classList.remove('safe-ascii', 'breached-ascii', 'default-ascii');
       boxElement.classList.remove('safe-bg', 'breached-bg', 'default-bg');
-  
+
       // Force reflow
       void boxElement.offsetWidth;
-  
+
       if (passwordStatus === 'safe') {
         safeLayer.style.opacity = '1';
         breachedLayer.style.opacity = '0';
@@ -323,7 +328,7 @@ function App() {
         console.log('Added default-bg class');
       }
     }
-  }, [passwordStatus]);  
+  }, [passwordStatus]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -362,14 +367,14 @@ function App() {
       const input = e.target;
       input.classList.remove('input-error');
     };
-  
+
     const inputs = document.querySelectorAll('input');
-  
+
     inputs.forEach(input => {
       input.addEventListener('focus', handleInputFocus);
       input.addEventListener('input', handleInputFocus);
     });
-  
+
     return () => {
       inputs.forEach(input => {
         input.removeEventListener('focus', handleInputFocus);
@@ -385,7 +390,15 @@ function App() {
 \\____/_.___/_/ /_/_/  /_/ /_/ /_/\\____/ 
 `;
 
-  if (!featureSupported) { return ( <div className="unsupported-warning"> <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '5px' }} /> <h1>Unsupported Browser</h1> <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p> </div> ); }
+  if (!featureSupported) {
+    return (
+      <div className="unsupported-warning">
+        <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '5px' }} />
+        <h1>Unsupported Browser</h1>
+        <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p>
+      </div>
+    );
+  }
 
   const generateTestPassword = (status) => {
     const testPassword = status === 'safe' ? 'SafeTestPassword123!' : 'BreachedTestPassword456!';
@@ -412,7 +425,7 @@ function App() {
             {asciiArt}
             <div style={{ marginTop: '10px', fontSize: "13px" }}>deterministic password manager</div>
           </pre>
-          <div className="ascii-line"></div> {/* Added line under ASCII art */}
+          <div className="ascii-line"></div>
         </header>
         <div className="container">
           {stage === 'input' ? (
@@ -428,7 +441,7 @@ function App() {
               <input
                 type="password"
                 id="salt"
-                placeholder="Salt" // New salt input field
+                placeholder="Salt"
                 value={salt}
                 className="salt-input"
                 style={{ fontSize: "1.05rem" }}
@@ -465,42 +478,42 @@ function App() {
                 <FontAwesomeIcon icon={faUnlock} />
               </button>
               <hr style={{ width: "100%", textAlign: "left", marginLeft: "0", marginTop: '15px', color: "#444" }} />
-                <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '15px' }}>
-                  <h2>About Obfirmo</h2>
-                  <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, site, and salt.</p>
-                  <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Advantages</h3>
-                  <ul>
-                    <li>- No need to store passwords, reducing the risk of a single point of failure.</li>
-                    <li>- Easy to generate passwords for any site, ensuring quick and efficient access.</li>
-                    <li>- Passwords are unique and secure, enhancing overall security for each account.</li>
-                    <li>- Operates offline, ensuring data is never exposed to the internet.</li>
-                    <li>- Available as a Progressive Web App (PWA), providing cross-platform accessibility and offline capabilities.</li>
-                  </ul>
-                  <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Challenges</h3>
-                  <ul>
-                    <li>- If the master key is lost, all passwords are irretrievable.</li>
-                    <li>- Exact master key, site, and salt must be remembered precisely for password regeneration.</li>
-                    <li>- Site-specific password rules might require manual adjustments to generated passwords.</li>
-                    <li>- A compromised master password can lead to exposure of all derived passwords.</li>
-                    <li>- No ability to import existing passwords, requiring a fresh setup for all accounts.</li>
-                  </ul>
-                  <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>How to Use</h3>
-                  <ul>
-                    <li>1. Enter a strong master key.</li>
-                    <li>2. Optionally enter a salt value for extra security.</li>
-                    <li>3. Enter the site or account name.</li>
-                    <li>4. Specify the desired length of the password.</li>
-                    <li>5. Click the unlock button to generate your password.</li>
-                  </ul>
-                  <p>
-                    <strong>
-                      Made with <span>&lt;3</span> by{' '}
-                      <span className="zodsec-link" onClick={() => window.location.href = 'https://discord.gg/y8y95AXT7r'}>
-                        ZODSEC
-                      </span>
-                    </strong>
-                  </p>
-                </div>
+              <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '15px' }}>
+                <h2>About Obfirmo</h2>
+                <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, site, and salt.</p>
+                <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Advantages</h3>
+                <ul>
+                  <li>- No need to store passwords, reducing the risk of a single point of failure.</li>
+                  <li>- Easy to generate passwords for any site, ensuring quick and efficient access.</li>
+                  <li>- Passwords are unique and secure, enhancing overall security for each account.</li>
+                  <li>- Operates offline, ensuring data is never exposed to the internet.</li>
+                  <li>- Available as a Progressive Web App (PWA), providing cross-platform accessibility and offline capabilities.</li>
+                </ul>
+                <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Challenges</h3>
+                <ul>
+                  <li>- If the master key is lost, all passwords are irretrievable.</li>
+                  <li>- Exact master key, site, and salt must be remembered precisely for password regeneration.</li>
+                  <li>- Site-specific password rules might require manual adjustments to generated passwords.</li>
+                  <li>- A compromised master password can lead to exposure of all derived passwords.</li>
+                  <li>- No ability to import existing passwords, requiring a fresh setup for all accounts.</li>
+                </ul>
+                <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>How to Use</h3>
+                <ul>
+                  <li>1. Enter a strong master key.</li>
+                  <li>2. Optionally enter a salt value for extra security.</li>
+                  <li>3. Enter the site or account name.</li>
+                  <li>4. Specify the desired length of the password.</li>
+                  <li>5. Click the unlock button to generate your password.</li>
+                </ul>
+                <p>
+                  <strong>
+                    Made with <span>&lt;3</span> by{' '}
+                    <span className="zodsec-link" onClick={() => window.location.href = 'https://discord.gg/y8y95AXT7r'}>
+                      ZODSEC
+                    </span>
+                  </strong>
+                </p>
+              </div>
             </div>
           ) : stage === 'hash' ? (
             <div className={`hash-container ${animationClass}`}>
@@ -541,7 +554,7 @@ function App() {
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </button>
                 <button style={{ borderLeft: "none", borderTop: "1px solid #bebebe", borderRight: "none", borderLeft: "none", borderBottom: "1px solid #bebebe" }} onClick={handleCopy}>
-                  <FontAwesomeIcon icon={copyIcon} /> {/* Use the dynamic copyIcon */}
+                  <FontAwesomeIcon icon={copyIcon} />
                 </button>
                 <button style={{ borderLeft: "none", borderTop: "1px solid #bebebe", borderRight: "1px solid #bebebe", borderLeft: "none", borderBottom: "1px solid #bebebe" }} onClick={handleClear}>
                   <FontAwesomeIcon icon={faTimes} />
