@@ -273,6 +273,27 @@ function App() {
     setFeatureSupported(isSupported);
   }, []);
 
+  useEffect(() => {
+    const handleInputFocus = (e) => {
+      const input = e.target;
+      input.classList.remove('input-error');
+    };
+
+    const inputs = document.querySelectorAll('input');
+
+    inputs.forEach(input => {
+      input.addEventListener('focus', handleInputFocus);
+      input.addEventListener('input', handleInputFocus);
+    });
+
+    return () => {
+      inputs.forEach(input => {
+        input.removeEventListener('focus', handleInputFocus);
+        input.removeEventListener('input', handleInputFocus);
+      });
+    };
+  }, []);
+
   const asciiArt = `         __    _____                    
   ____  / /_  / __(_)________ ___  ____ 
  / __ \\/ __ \\/ /_/ / ___/ __ \`__ \\/ __ \\
