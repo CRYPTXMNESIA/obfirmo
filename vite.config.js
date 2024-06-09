@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { viteObfuscateFile } from 'vite-plugin-obfuscator';
+import legacy from '@vitejs/plugin-legacy';
 
 export default defineConfig({
   plugins: [
