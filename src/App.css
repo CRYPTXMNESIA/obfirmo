@@ -306,6 +306,7 @@ input[type="number"] {
   margin-top: 8px;
   margin-bottom: 15px;
   width: 100%;
+  overflow: hidden;
 }
 
 input[type="checkbox"] {
@@ -314,6 +315,7 @@ input[type="checkbox"] {
   -ms-appearance: checkbox !important;
   -o-appearance: checkbox !important;
   appearance: checkbox !important;
+  overflow: hidden;
 }
 
 /* Custom Checkbox Styles */
@@ -323,6 +325,7 @@ input[type="checkbox"] {
   cursor: pointer;
   height: 0;
   width: 0;
+  overflow: hidden;
 }
 
 .checkbox-label {
@@ -334,6 +337,7 @@ input[type="checkbox"] {
   cursor: pointer;
   font-size: 1.02rem;
   user-select: none;
+  overflow: hidden;
 }
 
 /* Create a custom checkbox */
@@ -347,6 +351,7 @@ input[type="checkbox"] {
   background-color: transparent;
   border: 1px solid #bebebe;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .checkbox-label input:checked ~ .custom-checkbox {
@@ -375,4 +380,5 @@ input[type="checkbox"] {
 .checkbox-label span {
   margin-left: 0px;
   color: #bebebe;
+  overflow: hidden;
 }
