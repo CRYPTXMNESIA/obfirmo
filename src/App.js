@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { AlertTriangle } from 'react-feather';
 import jsSHA from 'jssha';
-import ClipboardJS from 'clipboard';
 import seedrandom from 'seedrandom';
 import './App.css';
 
