@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { AlertTriangle } from 'react-feather';
 import jsSHA from 'jssha';
+import ClipboardJS from 'clipboard';
 import seedrandom from 'seedrandom';
 import './App.css';
 
@@ -26,6 +27,11 @@ function App() {
 
   const progressMessageRef = useRef(null);
   const infoSectionRef = useRef(null);
+
+  const [includeLowerCase, setIncludeLowerCase] = useState(true);
+  const [includeUpperCase, setIncludeUpperCase] = useState(true);
+  const [includeNumbers, setIncludeNumbers] = useState(true);
+  const [includeSpecialCharacters, setIncludeSpecialCharacters] = useState(true);
 
   const specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~";
   const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -52,24 +58,37 @@ function App() {
     let passwordArray = [];
 
     setProgressMessage('Stage 1...');
-    passwordArray.push(getRandomCharacter(specialCharacters, rng));
+    if (includeSpecialCharacters) {
+      passwordArray.push(getRandomCharacter(specialCharacters, rng));
+    }
     setProgress(20);
 
     setProgressMessage('Stage 2...');
-    passwordArray.push(getRandomCharacter(upperCase, rng));
+    if (includeUpperCase) {
+      passwordArray.push(getRandomCharacter(upperCase, rng));
+    }
     setProgress(40);
 
     setProgressMessage('Stage 3...');
-    passwordArray.push(getRandomCharacter(lowerCase, rng));
+    if (includeLowerCase) {
+      passwordArray.push(getRandomCharacter(lowerCase, rng));
+    }
     setProgress(60);
 
     setProgressMessage('Stage 4...');
-    passwordArray.push(getRandomCharacter(numbers, rng));
+    if (includeNumbers) {
+      passwordArray.push(getRandomCharacter(numbers, rng));
+    }
     setProgress(80);
 
-    const allCharacters = specialCharacters + upperCase + lowerCase + numbers;
+    const allCharacters = 
+      (includeSpecialCharacters ? specialCharacters : '') + 
+      (includeUpperCase ? upperCase : '') + 
+      (includeLowerCase ? lowerCase : '') + 
+      (includeNumbers ? numbers : '');
+
     setProgressMessage('Stage 5...');
-    for (let i = 4; i < length; i++) {
+    for (let i = passwordArray.length; i < length; i++) {
       passwordArray.push(getRandomCharacter(allCharacters, rng));
     }
 
@@ -165,11 +184,52 @@ function App() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(password.replace(/\n/g, ''));
-    setCopyIcon(faCheck);
-    setTimeout(() => {
-      setCopyIcon(faCopy);
-    }, 1500);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(password.replace(/\n/g, ''))
+        .then(() => {
+          setCopyIcon(faCheck);
+          setTimeout(() => {
+            setCopyIcon(faCopy);
+          }, 1500);
+        })
+        .catch(err => {
+          console.log('Clipboard API failed, using execCommand fallback:', err);
+          fallbackCopyTextToClipboard(password.replace(/\n/g, ''));
+        });
+    } else {
+      console.error('Clipboard API not supported, using execCommand fallback.');
+      fallbackCopyTextToClipboard(password.replace(/\n/g, ''));
+    }
+  };
+  
+  const fallbackCopyTextToClipboard = (text) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+
+    textArea.style.position = 'fixed';  // Prevent scrolling to bottom of page in MS Edge.
+    textArea.style.left = '-9999px';  // Move element out of view
+    textArea.setAttribute('readonly', '');  // Prevent keyboard from showing on mobile devices
+
+    const range = document.createRange();
+    range.selectNodeContents(textArea);
+
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    textArea.setSelectionRange(0, 999999); // Ensure everything is selected
+
+    try {
+      document.execCommand('copy');
+      setCopyIcon(faCheck);
+      setTimeout(() => {
+        setCopyIcon(faCopy);
+      }, 1500);
+    } catch (err) {
+      console.error('Fallback: Unable to copy', err);
+    }
+
+    document.body.removeChild(textArea);
   };
 
   const revealPassword = () => {
@@ -296,15 +356,7 @@ function App() {
 \\____/_.___/_/ /_/_/  /_/ /_/ /_/\\____/ 
 `;
 
-  if (!featureSupported) {
-    return (
-      <div className="unsupported-warning">
-        <AlertTriangle size={48} color="#FFA500" style={{ marginTop: '5px' }} />
-        <h1>Unsupported Browser</h1>
-        <p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p>
-      </div>
-    );
-  }
+  //if (!featureSupported) {return (<div className="unsupported-warning"><AlertTriangle size={48} color="#FFA500" style={{ marginTop: '5px' }} /><h1>Unsupported Browser</h1><p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p></div>);}
 
   return (
     <div className="App">
@@ -363,6 +415,28 @@ function App() {
                   }
                 }}
               />
+              <div className="checkbox-grid">
+                <label className="checkbox-label">
+                  <input type="checkbox" checked={includeLowerCase} onChange={() => setIncludeLowerCase(!includeLowerCase)} />
+                  <span className="custom-checkbox"></span>
+                  <span>abc</span>
+                </label>
+                <label className="checkbox-label">
+                  <input type="checkbox" checked={includeUpperCase} onChange={() => setIncludeUpperCase(!includeUpperCase)} />
+                  <span className="custom-checkbox"></span>
+                  <span>ABC</span>
+                </label>
+                <label className="checkbox-label">
+                  <input type="checkbox" checked={includeNumbers} onChange={() => setIncludeNumbers(!includeNumbers)} />
+                  <span className="custom-checkbox"></span>
+                  <span>012</span>
+                </label>
+                <label className="checkbox-label">
+                  <input type="checkbox" checked={includeSpecialCharacters} onChange={() => setIncludeSpecialCharacters(!includeSpecialCharacters)} />
+                  <span className="custom-checkbox"></span>
+                  <span>$>#</span>
+                </label>
+              </div>
               <button style={{ border: "1px solid #bebebe" }} onClick={handleUnlock}>
                 <FontAwesomeIcon icon={faUnlock} />
               </button>
