@@ -360,7 +360,7 @@ function App() {
 \\____/_.___/_/ /_/_/  /_/ /_/ /_/\\____/ 
 `;
 
-  //if (!featureSupported) {return (<div className="unsupported-warning"><AlertTriangle size={48} color="#FFA500" style={{ marginTop: '5px' }} /><h1>Unsupported Browser</h1><p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p></div>);}
+  // if (!featureSupported) {return (<div className="unsupported-warning"><AlertTriangle size={48} color="#FFA500" style={{ marginTop: '5px' }} /><h1>Unsupported Browser</h1><p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p></div>);}
 
   return (
     <div className="App">
@@ -450,27 +450,25 @@ function App() {
                 <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, site, and salt.</p>
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Advantages</h3>
                 <ul>
-                  <li>- No need to store passwords, reducing the risk of a single point of failure.</li>
-                  <li>- Easy to generate passwords for any site, ensuring quick and efficient access.</li>
-                  <li>- Passwords are unique and secure, enhancing overall security for each account.</li>
-                  <li>- Operates offline, ensuring data is never exposed to the internet.</li>
-                  <li>- Available as a Progressive Web App (PWA), providing cross-platform accessibility and offline capabilities.</li>
+                  <li>- free</li>
+                  <li>- easy to use</li>
+                  <li>- fully offline</li>
+                  <li>- no data collection</li>
+                  <li>- most secure passwords</li>
+                  <li>- you can install it as an app from the browser</li>
                 </ul>
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Challenges</h3>
                 <ul>
-                  <li>- If the master key is lost, all passwords are irretrievable.</li>
-                  <li>- Exact master key, site, and salt must be remembered precisely for password regeneration.</li>
-                  <li>- Site-specific password rules might require manual adjustments to generated passwords.</li>
-                  <li>- A compromised master password can lead to exposure of all derived passwords.</li>
-                  <li>- No ability to import existing passwords, requiring a fresh setup for all accounts.</li>
+                  <li>- if you forget the master key, you can't recover it</li>
+                  <li>- if your master key gets leaked, all of your passwords can be compromised</li>
                 </ul>
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>How to Use</h3>
                 <ul>
-                  <li>1. Enter a strong master key.</li>
-                  <li>2. Optionally enter a salt value for extra security.</li>
-                  <li>3. Enter the site or account name.</li>
-                  <li>4. Specify the desired length of the password.</li>
-                  <li>5. Click the unlock button to generate your password.</li>
+                  <li>1. enter a strong master key</li>
+                  <li>2. optionally enter a salt value for extra security</li>
+                  <li>3. enter the site or account name</li>
+                  <li>4. specify the desired length of the password</li>
+                  <li>5. click the unlock button to generate your password</li>
                 </ul>
                 <p>
                   <strong>
