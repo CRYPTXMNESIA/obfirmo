@@ -17,7 +17,7 @@ const updateSW = registerSW({
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <React.StrictMode style={{ backgroundColor: "black" }}>
     <App />
   </React.StrictMode>
 );
