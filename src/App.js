@@ -151,18 +151,23 @@ function App() {
   const handleUnlock = () => {
     const masterKeyInput = document.getElementById('masterKey');
     const siteInput = document.getElementById('site');
-
+  
     if (!masterKey || !site) {
       if (!masterKey) masterKeyInput.classList.add('input-error');
       if (!site) siteInput.classList.add('input-error');
       return;
     }
-
+  
     if (length < 8 || length > 128) {
       alert('Password length must be between 8 and 128 characters.');
       return;
     }
-
+  
+    if (!includeLowerCase && !includeUpperCase && !includeNumbers && !includeSpecialCharacters) {
+      alert('At least one character type must be selected.');
+      return;
+    }
+  
     setTimeout(() => {
       setStage('hash');
       animateHashGeneration(masterKey, site, salt, length);
