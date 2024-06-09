@@ -53,7 +53,22 @@ export default defineConfig({
       rotateStringArray: true
     }),
     legacy({
-      targets: ['defaults', 'not IE 11', 'iOS >= 10'],
+      targets: [
+        'defaults',  // Default browserslist configuration
+        'not IE 11', // Exclude IE 11
+        'iOS >= 10', // iOS 10 and above
+        'last 2 versions', // Last 2 versions of all major browsers
+        'Firefox ESR', // Firefox Extended Support Release
+        '> 1%', // Browsers with more than 1% market share
+        'maintained node versions', // Supported Node.js versions
+        'Safari >= 10', // Safari 10 and above
+        'Android >= 4.4', // Android 4.4 and above
+        'Chrome >= 30', // Chrome 30 and above
+        'Firefox >= 30', // Firefox 30 and above
+        'Edge >= 15', // Edge 15 and above
+        'Opera >= 20', // Opera 20 and above
+        'Samsung >= 5' // Samsung browser 5 and above
+      ],
     })
   ],
   build: {
