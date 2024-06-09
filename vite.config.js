@@ -50,6 +50,9 @@ export default defineConfig({
       disableConsoleOutput: true,
       stringArray: true,
       rotateStringArray: true
+    }),
+    legacy({
+      targets: ['defaults', 'not IE 11', 'iOS >= 10'],
     })
   ],
   build: {
