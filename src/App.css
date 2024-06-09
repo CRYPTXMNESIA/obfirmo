@@ -1,0 +1,384 @@
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Consolas', monospace;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  border-radius: 0;
+  outline: none;
+  overflow-x: hidden;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+html, body {
+  overflow: auto; /* Prevent double scroll */
+  background-color: #0b0d11 !important;
+  color: #bebebe;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Changed from center to flex-start */
+  padding-top: 0px; /* Added padding to prevent content from being too close to the top */
+  overflow: auto;
+}
+
+.App {
+  text-align: center;
+  width: 100%;
+  max-width: 450px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Changed from space-between to flex-start */
+  padding-top: env(safe-area-inset-top);
+  position: relative; /* Added relative positioning */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  overflow: auto; /* Prevent double scroll */
+}
+
+.input-container, .hash-container, .final-container {
+  width: 100%;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  font-size: 0.8em; /* Adjusted font size */
+  padding: 10px;
+  margin-bottom: 1rem;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #bebebe;
+  color: #bebebe;
+}
+
+button {
+  width: 100%;
+  font-size: 1rem;
+  padding: 10px;
+  margin-bottom: 1rem;
+  background: transparent;
+  color: #bebebe;
+  cursor: pointer;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #555;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 1rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.ascii-art {
+  font-size: 0.75rem; /* Adjusted font size */
+  line-height: 1.2;
+  white-space: pre;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  overflow: auto;
+  text-align: center; /* Center align the ASCII art */
+  color: #bebebe;
+}
+
+.final-container .password-result {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid #bebebe;
+  text-align: left;
+  padding: 5px;
+  box-sizing: border-box;
+  overflow-x: auto !important; /* Enable horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile */
+}
+
+.buttons-container {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.buttons-container button {
+  width: 33.3%;
+}
+
+.buttons-container button:active {
+  outline: none;
+}
+
+input:focus {
+  border-bottom: 1px solid rgb(0, 95, 133);
+}
+
+.hash-container {
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-width: 450px;
+}
+
+.progress-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center; /* Ensure circles and connectors align */
+  margin: 10px;
+  margin-top: 0px;
+}
+
+.progress-stage {
+  width: 20px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0%;
+}
+
+.progress-connector {
+  flex: 1;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-left: 0px; /* Adjust spacing */
+  margin-right: 0px; /* Adjust spacing */
+}
+
+.progress-stage.active {
+  background-color: #bebebe;
+}
+
+.progress-stage.active + .progress-connector {
+  background-color: #bebebe;
+}
+
+.hash-container .yourPass {
+  font-size: 1em; /* Adjusted font size */
+  font-weight: normal;
+  color: var(--progress-color-end);
+  transition: color 0.3s ease;
+}
+
+.yourPass {
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-bottom: 10px;
+}
+
+:root {
+  --progress-color-end: #bebebe; /* Default color */
+}
+
+.safe-password, .safe-ascii, .safe-progress .progress-stage.active, .safe-progress .progress-stage.active + .progress-connector {
+  --progress-color-end: #009900;
+}
+
+.breached-password, .breached-ascii, .breached-progress .progress-stage.active, .breached-progress .progress-stage.active + .progress-connector {
+  --progress-color-end: #cc0000;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.unsupported-warning {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  height: 100%;
+  text-align: left;
+  padding: 20px;
+  background-color: #0b0d11;
+  color: #bebebe;
+}
+
+.unsupported-warning h1 {
+  font-size: 2em;
+  margin-bottom: 1rem;
+}
+
+.unsupported-warning p {
+  font-size: 1.2em;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.unsupported-warning svg {
+  margin-bottom: 1.5rem;
+}
+
+.nothing {
+  color: rgb(0, 95, 133);
+}
+
+/* Hide arrows in input type number for Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
+/* Hide arrows in input type number for Firefox */
+input[type="number"] {
+    -moz-appearance: textfield !important;
+}
+
+.info-section {
+  background-color: transparent !important;
+  color: #8f8f8f;
+  padding: 0px;
+  margin-top: 10px;
+  max-width: 290px !important;
+  text-align: left;
+}
+
+.info-section h2, .info-section h3 {
+  color: #8f8f8f;
+  text-decoration: underline;
+}
+
+.info-section ul {
+  padding-left: 20px;
+}
+
+.info-section p {
+  margin: 10px 0;
+}
+
+.info-section strong {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.info-section span {
+  color: rgb(0, 95, 133);
+}
+
+.zodsec-link {
+  text-decoration: underline;
+  color: rgb(0, 95, 133);
+  cursor: pointer;
+}
+
+/* New CSS class for the input error state */
+.input-error {
+  border-bottom: 1px solid rgb(230, 0, 0) !important;
+  transition: border-bottom 0.0s ease-out;
+}
+
+/* Checkbox grid styles */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  width: 100%;
+  overflow: hidden;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: checkbox !important;
+  -moz-appearance: checkbox !important;
+  -ms-appearance: checkbox !important;
+  -o-appearance: checkbox !important;
+  appearance: checkbox !important;
+  overflow: hidden;
+}
+
+/* Custom Checkbox Styles */
+input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 1.02rem;
+  user-select: none;
+  overflow: hidden;
+}
+
+/* Create a custom checkbox */
+.checkbox-label .custom-checkbox {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 16.5px;
+  width: 16.5px;
+  background-color: transparent;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.checkbox-label input:checked ~ .custom-checkbox {
+  background-color: rgb(0, 95, 133);
+  padding: 2px; /* Add padding inside the checkbox */
+}
+
+.checkbox-label input:checked ~ .custom-checkbox:after {
+  content: "";
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background-color: rgb(0, 95, 133);
+}
+
+/* Style the checkmark/indicator (hidden when not checked) */
+.checkbox-label .custom-checkbox:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-label input:checked ~ .custom-checkbox:after {
+  display: block;
+}
+
+.checkbox-label span {
+  margin-left: 0px;
+  color: #bebebe;
+  overflow: hidden;
+}
