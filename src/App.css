@@ -85,6 +85,13 @@ button {
   cursor: pointer;
 }
 
+.unlockBtn svg {
+  -moz-transform: scaleY(-1) rotate(225deg); 
+  -o-transform: scaleY(-1) rotate(225deg); 
+  -webkit-transform: scaleY(-1) rotate(225deg); 
+  transform: scaleY(-1) rotate(225deg); 
+}
+
 .loader {
   border: 5px solid #f3f3f3;
   border-radius: 50%;
