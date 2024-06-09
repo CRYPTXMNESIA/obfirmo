@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle, faKey } from '@fortawesome/free-solid-svg-icons';
 import { AlertTriangle } from 'react-feather';
 import jsSHA from 'jssha';
 import seedrandom from 'seedrandom';
@@ -441,8 +441,8 @@ function App() {
                   <span>$>#</span>
                 </label>
               </div>
-              <button style={{ border: "1px solid #bebebe" }} onClick={handleUnlock}>
-                <FontAwesomeIcon icon={faUnlock} />
+              <button className='unlockBtn' style={{ border: "1px solid #bebebe" }} onClick={handleUnlock}>
+                <FontAwesomeIcon icon={faKey} />
               </button>
               <hr style={{ width: "100%", textAlign: "left", marginLeft: "0", marginTop: '15px', color: "#444" }} />
               <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '15px' }}>
@@ -450,25 +450,25 @@ function App() {
                 <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, site, and salt.</p>
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Advantages</h3>
                 <ul>
-                  <li>- Free</li>
-                  <li>- Easy to use</li>
-                  <li>- Fully offline</li>
-                  <li>- No data collection</li>
-                  <li>- Most secure passwords</li>
-                  <li>- You can install it as an app from the browser</li>
+                  <li>- free</li>
+                  <li>- easy to use</li>
+                  <li>- fully offline</li>
+                  <li>- no data collection</li>
+                  <li>- most secure passwords</li>
+                  <li>- you can install it as an app from the browser</li>
                 </ul>
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Challenges</h3>
                 <ul>
-                  <li>- If you forget the master key, you can't recover it</li>
-                  <li>- If your master key gets leaked, all of your passwords can be compromised</li>
+                  <li>- if you forget the master key, you can't recover it</li>
+                  <li>- if your master key gets leaked, all of your passwords can be compromised</li>
                 </ul>
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>How to Use</h3>
                 <ul>
-                  <li>1. Enter a strong master key</li>
-                  <li>2. Optionally enter a salt value for extra security</li>
-                  <li>3. Enter the site or account name</li>
-                  <li>4. Specify the desired length of the password</li>
-                  <li>5. Click the unlock button to generate your password</li>
+                  <li>1. enter a strong master key</li>
+                  <li>2. optionally enter a salt value for extra security</li>
+                  <li>3. enter the site or account name</li>
+                  <li>4. specify the desired length of the password</li>
+                  <li>5. click the unlock button to generate your password</li>
                 </ul>
                 <p>
                   <strong>
