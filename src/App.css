@@ -1,3 +1,4 @@
+/* Global styles */
 * {
   margin: 0;
   padding: 0;
@@ -295,4 +296,83 @@ input[type="number"] {
 .input-error {
   border-bottom: 1px solid rgb(230, 0, 0) !important;
   transition: border-bottom 0.0s ease-out;
+}
+
+/* Checkbox grid styles */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: checkbox !important;
+  -moz-appearance: checkbox !important;
+  -ms-appearance: checkbox !important;
+  -o-appearance: checkbox !important;
+  appearance: checkbox !important;
+}
+
+/* Custom Checkbox Styles */
+input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 1.02rem;
+  user-select: none;
+}
+
+/* Create a custom checkbox */
+.checkbox-label .custom-checkbox {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 16.5px;
+  width: 16.5px;
+  background-color: transparent;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+}
+
+.checkbox-label input:checked ~ .custom-checkbox {
+  background-color: rgb(0, 95, 133);
+  padding: 2px; /* Add padding inside the checkbox */
+}
+
+.checkbox-label input:checked ~ .custom-checkbox:after {
+  content: "";
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background-color: rgb(0, 95, 133);
+}
+
+/* Style the checkmark/indicator (hidden when not checked) */
+.checkbox-label .custom-checkbox:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-label input:checked ~ .custom-checkbox:after {
+  display: block;
+}
+
+.checkbox-label span {
+  margin-left: 0px;
+  color: #bebebe;
 }
