@@ -164,7 +164,7 @@ function App() {
     }
   
     if (!includeLowerCase && !includeUpperCase && !includeNumbers && !includeSpecialCharacters) {
-      alert('tt least one character type must be selected');
+      alert('at least one character type must be selected');
       return;
     }
   
