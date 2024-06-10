@@ -461,7 +461,7 @@ function App() {
                   <li>- No data collection</li>
                   <li>- Most secure passwords</li>
                   <li>- You can install it as an app from the browser</li>
-                  <li>- built-in security breach checker (haveibeenpwned API)</li>
+                  <li>- Built-in security breach checker (haveibeenpwned API)</li>
                 </ul>
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Cons</h3>
                 <ul>
