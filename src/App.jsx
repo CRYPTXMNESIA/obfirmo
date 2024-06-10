@@ -453,7 +453,7 @@ function App() {
               <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '15px' }}>
                 <h2>About Obfirmo</h2>
                 <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, and site/account name.</p>
-                <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Advantages</h3>
+                <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Pros</h3>
                 <ul>
                   <li>- Free</li>
                   <li>- Easy to use</li>
@@ -462,7 +462,7 @@ function App() {
                   <li>- Most secure passwords</li>
                   <li>- You can install it as an app from the browser</li>
                 </ul>
-                <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Challenges</h3>
+                <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Cons</h3>
                 <ul>
                   <li>- If you forget the master key, you can't recover it</li>
                   <li>- If your master key gets leaked, all of your passwords can be compromised</li>
