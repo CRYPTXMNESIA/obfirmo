@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle, faKey } from '@fortawesome/free-solid-svg-icons';
 import { AlertTriangle } from 'react-feather';
 import jsSHA from 'jssha';
@@ -484,6 +485,18 @@ function App() {
                     </span>
                   </strong>
                 </p>
+                <button
+                  style={{
+                    border: "none",
+                    background: "none",
+                    cursor: "pointer",
+                    marginTop: "-10px",
+                    marginLeft: "0px"
+                  }}
+                  onClick={() => window.open('https://github.com/CRYPTXMNESIA/obfirmo', '_blank')}
+                >
+                  <FontAwesomeIcon icon={faGithub} size="2x" />
+                </button>
               </div>
             </div>
           ) : stage === 'hash' ? (
