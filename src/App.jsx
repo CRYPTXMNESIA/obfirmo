@@ -152,9 +152,10 @@ function App() {
     const masterKeyInput = document.getElementById('masterKey');
     const siteInput = document.getElementById('site');
   
-    if (!masterKey || !site) {
+    if (!masterKey || !site || !salt) {
       if (!masterKey) masterKeyInput.classList.add('input-error');
       if (!site) siteInput.classList.add('input-error');
+      if (!salt) saltInput.classList.add('input-error');
       return;
     }
   
@@ -376,21 +377,21 @@ function App() {
           {stage === 'input' ? (
             <div className="input-container">
               <input
+                type="text"
+                id="salt"
+                placeholder="* Obfirmo ID"
+                value={salt}
+                className="salt-input"
+                style={{ fontSize: "1.05rem" }}
+                onChange={(e) => setSalt(e.target.value)}
+              />
+              <input
                 type="password"
                 id="masterKey"
                 placeholder="* Master Key"
                 value={masterKey}
                 style={{ fontSize: "1.05rem" }}
                 onChange={(e) => setMasterKey(e.target.value)}
-              />
-              <input
-                type="password"
-                id="salt"
-                placeholder="Salt"
-                value={salt}
-                className="salt-input"
-                style={{ fontSize: "1.05rem" }}
-                onChange={(e) => setSalt(e.target.value)}
               />
               <input
                 type="text"
@@ -464,8 +465,8 @@ function App() {
                 </ul>
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>How to Use</h3>
                 <ul>
-                  <li>1. Enter a strong master key</li>
-                  <li>2. Optionally enter a salt value for extra security</li>
+                  <li>1. Enter your Obfirmo ID (username)</li>
+                  <li>2. Enter your master key</li>
                   <li>3. Enter the site or account name</li>
                   <li>4. Specify the desired length of the password</li>
                   <li>5. Click the unlock button to generate your password</li>
