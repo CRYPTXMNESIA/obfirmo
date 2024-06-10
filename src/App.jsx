@@ -378,9 +378,9 @@ function App() {
           {stage === 'input' ? (
             <div className="input-container">
               <input
-                type="text"
+                type="password"
                 id="salt"
-                placeholder="* Obfirmo ID"
+                placeholder="Obfirmo ID"
                 value={salt}
                 className="salt-input"
                 maxLength={128}
@@ -390,7 +390,7 @@ function App() {
               <input
                 type="password"
                 id="masterKey"
-                placeholder="* Master Key"
+                placeholder="Master Key"
                 value={masterKey}
                 maxLength={128}
                 style={{ fontSize: "1.05rem" }}
@@ -399,7 +399,7 @@ function App() {
               <input
                 type="text"
                 id="site"
-                placeholder="* Site/Account"
+                placeholder="Site/Account"
                 value={site}
                 maxLength={128}
                 style={{ fontSize: "1.05rem" }}
@@ -452,7 +452,7 @@ function App() {
               <hr style={{ width: "100%", textAlign: "left", marginLeft: "0", marginTop: '15px', color: "#444" }} />
               <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '15px' }}>
                 <h2>About Obfirmo</h2>
-                <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, site, and salt.</p>
+                <p>Obfirmo is a deterministic password manager that generates passwords based on a master key, and site/account name.</p>
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Advantages</h3>
                 <ul>
                   <li>- Free</li>
