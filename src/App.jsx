@@ -151,6 +151,7 @@ function App() {
   const handleUnlock = () => {
     const masterKeyInput = document.getElementById('masterKey');
     const siteInput = document.getElementById('site');
+    const saltInput = document.getElementById('salt');
   
     if (!masterKey || !site || !salt) {
       if (!masterKey) masterKeyInput.classList.add('input-error');
@@ -382,6 +383,7 @@ function App() {
                 placeholder="* Obfirmo ID"
                 value={salt}
                 className="salt-input"
+                maxLength={128}
                 style={{ fontSize: "1.05rem" }}
                 onChange={(e) => setSalt(e.target.value)}
               />
@@ -390,6 +392,7 @@ function App() {
                 id="masterKey"
                 placeholder="* Master Key"
                 value={masterKey}
+                maxLength={128}
                 style={{ fontSize: "1.05rem" }}
                 onChange={(e) => setMasterKey(e.target.value)}
               />
@@ -398,6 +401,7 @@ function App() {
                 id="site"
                 placeholder="* Site/Account"
                 value={site}
+                maxLength={128}
                 style={{ fontSize: "1.05rem" }}
                 onChange={(e) => setSite(e.target.value)}
               />
@@ -466,10 +470,10 @@ function App() {
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>How to Use</h3>
                 <ul>
                   <li>1. Enter your Obfirmo ID (username)</li>
-                  <li>2. Enter your master key</li>
+                  <li>2. Enter your Master Key</li>
                   <li>3. Enter the site or account name</li>
                   <li>4. Specify the desired length of the password</li>
-                  <li>5. Click the unlock button to generate your password</li>
+                  <li>5. Click the key button to get your password</li>
                 </ul>
                 <p>
                   <strong>
