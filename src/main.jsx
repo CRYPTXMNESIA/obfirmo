@@ -20,7 +20,19 @@ const updateSW = registerSW({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode style={{ backgroundColor: "#0b0d11" }}>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            color: '#bebebe', // Adjust this color if needed
+            fontSize: '1.05rem',
+            fontWeight: 'bold',
+        }}>
+            LOADING
+        </div>
+    }>
       <App />
     </Suspense>
   </React.StrictMode>
