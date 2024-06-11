@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             alignItems: 'center',
             height: '100vh',
             color: '#bebebe', // Adjust this color if needed
-            fontSize: '1.05rem',
+            fontSize: '.75rem',
             fontWeight: 'bold',
         }}>
             {`    __                ___            
