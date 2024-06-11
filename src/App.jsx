@@ -104,7 +104,7 @@ function App() {
     const prefix = hash.substring(0, 5).toUpperCase();
     const suffix = hash.substring(5).toUpperCase();
 
-    const response = await fetch(`https:
+    const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
     const data = await response.text();
     const pwned = data.split('\n').some(line => line.startsWith(suffix));
 
@@ -153,24 +153,24 @@ function App() {
     const masterKeyInput = document.getElementById('masterKey');
     const siteInput = document.getElementById('site');
     const saltInput = document.getElementById('salt');
-
+  
     if (!masterKey || !site || !salt) {
       if (!masterKey) masterKeyInput.classList.add('input-error');
       if (!site) siteInput.classList.add('input-error');
       if (!salt) saltInput.classList.add('input-error');
       return;
     }
-
+  
     if (length < 8 || length > 128) {
       alert('Password length must be between 8 and 128 characters.');
       return;
     }
-
+  
     if (!includeLowerCase && !includeUpperCase && !includeNumbers && !includeSpecialCharacters) {
       alert('At least one character type must be selected.');
       return;
     }
-
+  
     setTimeout(() => {
       setStage('hash');
       animateHashGeneration(masterKey, site, salt, length);
@@ -208,15 +208,15 @@ function App() {
       fallbackCopyTextToClipboard(password.replace(/\n/g, ''));
     }
   };
-
+  
   const fallbackCopyTextToClipboard = (text) => {
     const textArea = document.createElement('textarea');
     textArea.value = text;
     document.body.appendChild(textArea);
 
-    textArea.style.position = 'fixed';  
-    textArea.style.left = '-9999px';  
-    textArea.setAttribute('readonly', '');  
+    textArea.style.position = 'fixed';  // Prevent scrolling to bottom of page in MS Edge.
+    textArea.style.left = '-9999px';  // Move element out of view
+    textArea.setAttribute('readonly', '');  // Prevent keyboard from showing on mobile devices
 
     const range = document.createRange();
     range.selectNodeContents(textArea);
@@ -224,7 +224,7 @@ function App() {
     const selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
-    textArea.setSelectionRange(0, 999999); 
+    textArea.setSelectionRange(0, 999999); // Ensure everything is selected
 
     try {
       document.execCommand('copy');
@@ -362,6 +362,8 @@ function App() {
 / /_/ / /_/ / __/ / /  / / / / / / /_/ /
 \\____/_.___/_/ /_/_/  /_/ /_/ /_/\\____/ 
 `;
+
+  // if (!featureSupported) {return (<div className="unsupported-warning"><AlertTriangle size={48} color="#FFA500" style={{ marginTop: '5px' }} /><h1>Unsupported Browser</h1><p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p></div>);}
 
   return (
     <div className="App">

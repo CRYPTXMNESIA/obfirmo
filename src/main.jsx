@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { registerSW } from 'virtual:pwa-register';
 
+// Register the service worker with an onUpdate handler
 const updateSW = registerSW({
   onNeedRefresh() {
     if (window.confirm("New version available! Would you like to install it now?")) {
