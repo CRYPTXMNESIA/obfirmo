@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import './App.css';
 import { registerSW } from 'virtual:pwa-register';
 
 const App = lazy(() => import('./App'));
