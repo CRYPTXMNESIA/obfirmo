@@ -57,37 +57,24 @@ export default defineConfig({
     }),
     legacy({
       targets: [
-        'defaults',
-        'not IE 11',
-        'iOS >= 10',
-        'last 2 versions',
-        'Firefox ESR',
-        '> 1%',
-        'maintained node versions',
-        'Safari >= 10',
-        'Android >= 4.4',
-        'Chrome >= 30',
-        'Firefox >= 30',
-        'Edge >= 15',
-        'Opera >= 20',
-        'Samsung >= 5'
+        'defaults',  // Default browserslist configuration
+        'not IE 11', // Exclude IE 11
+        'iOS >= 10', // iOS 10 and above
+        'last 2 versions', // Last 2 versions of all major browsers
+        'Firefox ESR', // Firefox Extended Support Release
+        '> 1%', // Browsers with more than 1% market share
+        'maintained node versions', // Supported Node.js versions
+        'Safari >= 10', // Safari 10 and above
+        'Android >= 4.4', // Android 4.4 and above
+        'Chrome >= 30', // Chrome 30 and above
+        'Firefox >= 30', // Firefox 30 and above
+        'Edge >= 15', // Edge 15 and above
+        'Opera >= 20', // Opera 20 and above
+        'Samsung >= 5' // Samsung browser 5 and above
       ],
     })
   ],
   build: {
     sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return id.toString().split('node_modules/')[1].split('/')[0].toString();
-          }
-        }
-      }
-    }
-  },
-  optimizeDeps: {
-    include: ['react', 'react-dom'],
-    exclude: ['@vitejs/plugin-legacy', 'vite-plugin-obfuscator'],
-  },
+  }
 });
