@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import { registerSW } from 'virtual:pwa-register';
+
+const App = lazy(() => import('./App'));
 
 // Register the service worker with an onUpdate handler
 const updateSW = registerSW({
@@ -18,6 +19,8 @@ const updateSW = registerSW({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode style={{ backgroundColor: "black" }}>
-    <App />
+    <Suspense fallback={<div>Loading...</div>}>
+      <App />
+    </Suspense>
   </React.StrictMode>
 );
