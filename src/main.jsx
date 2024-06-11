@@ -30,7 +30,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             fontSize: '1.05rem',
             fontWeight: 'bold',
         }}>
-            LOADING
+            {`    __                ___            
+   / /___  ____ _____/ (_)___  ____ _
+  / / __ \\/ __ \`/ __  / / __ \\/ __ \`/
+ / / /_/ / /_/ / /_/ / / / / / /_/ / 
+/_/\\____/\\__,_/\\__,_/_/_/ /_/\\__, /  
+                            /____/   `}
         </div>
     }>
       <App />
