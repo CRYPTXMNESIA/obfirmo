@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle, faKey } from '@fortawesome/free-solid-svg-icons';
 import { AlertTriangle } from 'react-feather';
+import seedrandom from 'seedrandom';
 import './App.css';
 
 const InfoSection = lazy(() => import('./InfoSection'));
 const ProgressContainer = lazy(() => import('./ProgressContainer'));
 const jsSHA = lazy(() => import('jssha'));
-const seedrandom = lazy(() => import('seedrandom'));
 
 function App() {
   const [masterKey, setMasterKey] = useState('');
