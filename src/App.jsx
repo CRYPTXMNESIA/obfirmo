@@ -34,6 +34,8 @@ function App() {
   const [includeUpperCase, setIncludeUpperCase] = useState(true);
   const [includeNumbers, setIncludeNumbers] = useState(true);
   const [includeSpecialCharacters, setIncludeSpecialCharacters] = useState(true);
+  const [showPopup, setShowPopup] = useState(true);
+  const [installStatus, setInstallStatus] = useState('Installing...');
 
   const specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~";
   const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -359,6 +361,30 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then((registration) => {
+          registration.onupdatefound = () => {
+            setInstallStatus('Updating...');
+            const installingWorker = registration.installing;
+            installingWorker.onstatechange = () => {
+              if (installingWorker.state === 'installed') {
+                if (navigator.serviceWorker.controller) {
+                  setInstallStatus('Updated!');
+                } else {
+                  setInstallStatus('Installed!');
+                }
+              }
+            };
+          };
+        })
+        .catch((error) => {
+          console.error('Error during service worker registration:', error);
+        });
+    }
+  }, []);
+
   const asciiArt = `         __    _____                    
   ____  / /_  / __(_)________ ___  ____ 
  / __ \\/ __ \\/ /_/ / ___/ __ \`__ \\/ __ \\
@@ -370,6 +396,16 @@ function App() {
 
   return (
     <div className="App">
+      {showPopup && (
+        <div className="install-popup">
+          <div className="install-popup-content">
+            <div className="install-popup-text">{installStatus}</div>
+            <button className="install-popup-close" onClick={() => setShowPopup(false)}>
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          </div>
+        </div>
+      )}
       <div className="wrapper">
         <header style={{ fontWeight: "bold" }} className="App-header">
           <pre className={`ascii-art ${passwordStatus === 'breached' ? 'breached-ascii' : passwordStatus === 'safe' ? 'safe-ascii' : 'default-ascii'}`}>
