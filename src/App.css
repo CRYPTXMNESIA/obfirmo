@@ -311,7 +311,7 @@ input[type="number"] {
   grid-template-columns: repeat(4, 1fr); /* Set four columns for a single row layout */
   gap: 0px;
   margin-top: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   width: 100%;
   overflow: hidden;
 }
