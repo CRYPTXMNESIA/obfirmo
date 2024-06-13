@@ -1,6 +1,3 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -113,10 +110,24 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            if (id.includes('react')) {
+              return 'react';
+            }
+            if (id.includes('jssha')) {
+              return 'jssha';
+            }
+            if (id.includes('seedrandom')) {
+              return 'seedrandom';
+            }
             return 'vendor';
           }
-        }
-      }
-    }
+        },
+      },
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true,
+      },
+    },
   }
 });

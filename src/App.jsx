@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle, faKey } from '@fortawesome/free-solid-svg-icons';
 import { AlertTriangle } from 'react-feather';
-import jsSHA from 'jssha';
-import seedrandom from 'seedrandom';
 import './App.css';
+
+const InfoSection = lazy(() => import('./InfoSection'));
+const ProgressContainer = lazy(() => import('./ProgressContainer'));
+const jsSHA = lazy(() => import('jssha'));
+const seedrandom = lazy(() => import('seedrandom'));
 
 function App() {
   const [masterKey, setMasterKey] = useState('');
@@ -98,6 +100,7 @@ function App() {
   };
 
   const checkPasswordPwned = async (password) => {
+    const { default: jsSHA } = await import('jssha');
     const sha1 = new jsSHA("SHA-1", "TEXT");
     sha1.update(password);
     const hash = sha1.getHash("HEX");
@@ -485,18 +488,6 @@ function App() {
                     </span>
                   </strong>
                 </p>
-                <button
-                  style={{
-                    border: "none",
-                    background: "none",
-                    cursor: "pointer",
-                    marginTop: "-10px",
-                    marginLeft: "0px"
-                  }}
-                  onClick={() => window.open('https://github.com/CRYPTXMNESIA/obfirmo', '_blank')}
-                >
-                  <FontAwesomeIcon icon={faGithub} size="2x" />
-                </button>
               </div>
             </div>
           ) : stage === 'hash' ? (
@@ -534,13 +525,13 @@ function App() {
                 style={{ width: '100%', textAlign: 'left' }}
               />
               <div className="buttons-container" ref={buttonsContainerRef}>
-                <button style={{ borderLeft: "1px solid #bebebe", borderTop: "1px solid #bebebe", borderRight: "none", borderLeft: "1px solid #bebebe", borderBottom: "1px solid #bebebe" }} onClick={togglePasswordVisibility}>
+                <button style={{ borderLeft: "1px solid #bebebe", borderTop: "1px solid #bebebe", borderRight: "none", borderBottom: "1px solid #bebebe" }} onClick={togglePasswordVisibility}>
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </button>
-                <button style={{ borderLeft: "none", borderTop: "1px solid #bebebe", borderRight: "none", borderLeft: "none", borderBottom: "1px solid #bebebe" }} onClick={handleCopy}>
+                <button style={{ borderLeft: "none", borderTop: "1px solid #bebebe", borderRight: "none", borderBottom: "1px solid #bebebe" }} onClick={handleCopy}>
                   <FontAwesomeIcon icon={copyIcon} />
                 </button>
-                <button style={{ borderLeft: "none", borderTop: "1px solid #bebebe", borderRight: "1px solid #bebebe", borderLeft: "none", borderBottom: "1px solid #bebebe" }} onClick={handleClear}>
+                <button style={{ borderLeft: "none", borderTop: "1px solid #bebebe", borderRight: "1px solid #bebebe", borderBottom: "1px solid #bebebe" }} onClick={handleClear}>
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
               </div>
