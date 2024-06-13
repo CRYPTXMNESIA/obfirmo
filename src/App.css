@@ -39,7 +39,7 @@ body {
 .App {
   text-align: center;
   width: 100%;
-  max-width: 280px;
+  max-width: 295px;
   overflow-y: auto; /* Enable vertical scrolling */
   display: flex;
   flex-direction: column;
