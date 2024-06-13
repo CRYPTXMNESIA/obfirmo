@@ -396,16 +396,6 @@ function App() {
 
   return (
     <div className="App">
-      {showPopup && (
-        <div className="install-popup">
-          <div className="install-popup-content">
-            <div className="install-popup-text">{installStatus}</div>
-            <button className="install-popup-close" onClick={() => setShowPopup(false)}>
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
-          </div>
-        </div>
-      )}
       <div className="wrapper">
         <header style={{ fontWeight: "bold" }} className="App-header">
           <pre className={`ascii-art ${passwordStatus === 'breached' ? 'breached-ascii' : passwordStatus === 'safe' ? 'safe-ascii' : 'default-ascii'}`}>
