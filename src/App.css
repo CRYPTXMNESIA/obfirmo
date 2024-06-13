@@ -390,3 +390,40 @@ input[type="checkbox"] {
   color: #bebebe;
   overflow: hidden;
 }
+
+.install-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #111315;
+  border-radius: 0;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  width: 300px;
+}
+
+.install-popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.install-popup-text {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.install-popup-close {
+  background: none;
+  border: none;
+  color: #bebebe;
+  cursor: pointer;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.install-popup-close:hover {
+  color: #ffffff;
+}
