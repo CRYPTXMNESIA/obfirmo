@@ -309,7 +309,7 @@ input[type="number"] {
 .checkbox-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* Set four columns for a single row layout */
-  gap: 10px;
+  gap: 0px;
   margin-top: 8px;
   margin-bottom: 15px;
   width: 100%;
@@ -339,7 +339,7 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   position: relative;
-  padding-left: 30px;
+  padding-left: 12px;
   margin-bottom: 0px;
   cursor: pointer;
   font-size: 1.02rem;
