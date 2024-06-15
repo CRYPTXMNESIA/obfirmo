@@ -309,7 +309,7 @@ input[type="number"] {
 .checkbox-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* Set four columns for a single row layout */
-  gap: 0px;
+  gap: 31px;
   margin-top: 8px;
   margin-bottom: 25px;
   width: 100%;
