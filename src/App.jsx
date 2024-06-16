@@ -482,7 +482,7 @@ function App() {
               <hr style={{ width: "100%", textAlign: "left", marginLeft: "0", marginTop: '15px', color: "#444" }} />
               <div className="info-section" ref={infoSectionRef} style={{ paddingTop: '15px' }}>
                 <h2>About Obfirmo</h2>
-                <p>Obfirmo is a deterministic password manager that generates passwords based on a master key and site/account name.</p>
+                <p>Obfirmo is a deterministic password manager that generates passwords based on your Obfirmo ID, your master key and a site or account name.</p>
                 <h3 style={{ marginTop: '10px', marginBottom: '5px' }}>Pros</h3>
                 <ul>
                   <li>- Free</li>
