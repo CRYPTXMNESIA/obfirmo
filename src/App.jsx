@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle, faKey } from '@fortawesome/free-solid-svg-icons';
 import { AlertTriangle } from 'react-feather';
 import seedrandom from 'seedrandom';
+import { minidenticon } from 'minidenticons';
 import './App.css';
 
 const InfoSection = lazy(() => import('./InfoSection'));
@@ -407,16 +408,25 @@ function App() {
         <div className="container">
           {stage === 'input' ? (
             <div className="input-container">
-              <input
-                type="password"
-                id="salt"
-                placeholder="Obfirmo ID"
-                value={salt}
-                className="salt-input"
-                maxLength={128}
-                style={{ fontSize: "1.05rem" }}
-                onChange={(e) => setSalt(e.target.value)}
-              />
+              <div className="salt-input-wrapper" style={{ position: 'relative', width: '100%' }}>
+                <input
+                  type="password"
+                  id="salt"
+                  placeholder="Obfirmo ID"
+                  value={salt}
+                  className="salt-input"
+                  maxLength={128}
+                  style={{ fontSize: "1.05rem", paddingLeft: '0px' }}
+                  onChange={(e) => setSalt(e.target.value)}
+                />
+                <div className="minidenticon-wrapper" style={{ position: 'absolute', top: '39%', right: '0px', transform: 'translateY(-50%)' }}>
+                  <img 
+                    src={`data:image/svg+xml;utf8,${encodeURIComponent(minidenticon(salt))}`}
+                    alt=""
+                    style={{ filter: 'grayscale(100%)', width: '30px', height: '30px', paddingRight: '0px' }}
+                  />
+                </div>
+              </div>
               <input
                 type="password"
                 id="masterKey"
