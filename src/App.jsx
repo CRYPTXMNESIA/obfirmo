@@ -415,7 +415,7 @@ function App() {
                   placeholder="Obfirmo ID"
                   value={salt}
                   className="salt-input"
-                  maxLength={28}
+                  maxLength={25}
                   style={{ fontSize: "1.05rem", paddingLeft: '0px' }}
                   onChange={(e) => setSalt(e.target.value)}
                 />
@@ -433,7 +433,7 @@ function App() {
                   id="masterKey"
                   placeholder="Master Key"
                   value={masterKey}
-                  maxLength={28}
+                  maxLength={25}
                   style={{ fontSize: "1.05rem", paddingLeft: '0px' }}
                   onChange={(e) => setMasterKey(e.target.value)}
                 />
