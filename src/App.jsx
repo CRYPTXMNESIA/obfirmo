@@ -423,7 +423,7 @@ function App() {
                   <img 
                     src={`data:image/svg+xml;utf8,${encodeURIComponent(minidenticon(salt))}`}
                     alt=""
-                    style={{ filter: 'grayscale(100%)', width: '30px', height: '30px', paddingRight: '0px' }}
+                    style={{ filter: 'grayscale(0%)', width: '30px', height: '30px', paddingRight: '0px' }}
                   />
                 </div>
               </div>
@@ -441,7 +441,7 @@ function App() {
                   <img 
                     src={`data:image/svg+xml;utf8,${encodeURIComponent(minidenticon(masterKey))}`}
                     alt=""
-                    style={{ filter: 'grayscale(100%)', width: '30px', height: '30px', paddingRight: '0px' }}
+                    style={{ filter: 'grayscale(0%)', width: '30px', height: '30px', paddingRight: '0px' }}
                   />
                 </div>
               </div>
