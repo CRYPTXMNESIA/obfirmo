@@ -427,3 +427,15 @@ input[type="checkbox"] {
 .install-popup-close:hover {
   color: #ffffff;
 }
+
+/* New styles for the salt input with Minidenticon */
+.salt-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.minidenticon-wrapper {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
