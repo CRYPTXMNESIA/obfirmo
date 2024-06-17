@@ -427,15 +427,24 @@ function App() {
                   />
                 </div>
               </div>
-              <input
-                type="password"
-                id="masterKey"
-                placeholder="Master Key"
-                value={masterKey}
-                maxLength={128}
-                style={{ fontSize: "1.05rem" }}
-                onChange={(e) => setMasterKey(e.target.value)}
-              />
+              <div className="salt-input-wrapper" style={{ position: 'relative', width: '100%' }}>
+                <input
+                  type="password"
+                  id="masterKey"
+                  placeholder="Master Key"
+                  value={masterKey}
+                  maxLength={128}
+                  style={{ fontSize: "1.05rem", paddingLeft: '0px' }}
+                  onChange={(e) => setMasterKey(e.target.value)}
+                />
+                <div className="minidenticon-wrapper" style={{ position: 'absolute', top: '39%', right: '0px', transform: 'translateY(-50%)' }}>
+                  <img 
+                    src={`data:image/svg+xml;utf8,${encodeURIComponent(minidenticon(masterKey))}`}
+                    alt=""
+                    style={{ filter: 'grayscale(100%)', width: '30px', height: '30px', paddingRight: '0px' }}
+                  />
+                </div>
+              </div>
               <input
                 type="text"
                 id="site"
