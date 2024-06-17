@@ -419,7 +419,7 @@ function App() {
                   style={{ fontSize: "1.05rem", paddingLeft: '0px' }}
                   onChange={(e) => setSalt(e.target.value)}
                 />
-                <div className="minidenticon-wrapper" style={{ position: 'absolute', top: '39%', right: '0px', transform: 'translateY(-50%)' }}>
+                <div className="minidenticon-wrapper" style={{ position: 'absolute', top: '39%', right: '-5.5px', transform: 'translateY(-50%)' }}>
                   <img 
                     src={`data:image/svg+xml;utf8,${encodeURIComponent(minidenticon(salt))}`}
                     alt=""
@@ -437,7 +437,7 @@ function App() {
                   style={{ fontSize: "1.05rem", paddingLeft: '0px' }}
                   onChange={(e) => setMasterKey(e.target.value)}
                 />
-                <div className="minidenticon-wrapper" style={{ position: 'absolute', top: '39%', right: '0px', transform: 'translateY(-50%)' }}>
+                <div className="minidenticon-wrapper" style={{ position: 'absolute', top: '39%', right: '-5.5px', transform: 'translateY(-50%)' }}>
                   <img 
                     src={`data:image/svg+xml;utf8,${encodeURIComponent(minidenticon(masterKey))}`}
                     alt=""
