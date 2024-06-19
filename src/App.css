@@ -108,10 +108,10 @@ button {
 }
 
 .ascii-art {
-  font-size: 0.54rem; /* Adjusted font size */
-  line-height: 1.1;
+  font-size: 0.75rem; /* Adjusted font size */
+  line-height: 1.2;
   white-space: pre;
-  margin-top: 0px;
+  margin-top: 5px;
   margin-bottom: 15px;
   overflow: auto;
   text-align: center; /* Center align the ASCII art */
