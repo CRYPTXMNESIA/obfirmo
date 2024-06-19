@@ -386,12 +386,11 @@ function App() {
     }
   }, []);
 
-  const asciiArt = `
-O       o O       o O       o O       o O       o O       o
-| O   o | | O   o | | O   o | | O   o | | O   o | | O   o |
-| | O | | | | O | | | | O | | | | O | | | | O | | | | O | |
-| o   O | | o   O | | o   O | | o   O | | o   O | | o   O |
-o       O o       O o       O o       O o       O o       O
+  const asciiArt = `         __    _____                    
+  ____  / /_  / __(_)________ ___  ____ 
+ / __ \\/ __ \\/ /_/ / ___/ __ \`__ \\/ __ \\
+/ /_/ / /_/ / __/ / /  / / / / / / /_/ /
+\\____/_.___/_/ /_/_/  /_/ /_/ /_/\\____/ 
 `;
 
   // if (!featureSupported) {return (<div className="unsupported-warning"><AlertTriangle size={48} color="#FFA500" style={{ marginTop: '5px' }} /><h1>Unsupported Browser</h1><p>Your browser does not support the essential features that are needed for Obfirmo to work properly. Please update your browser or switch to a newer browser.</p></div>);}
@@ -402,7 +401,7 @@ o       O o       O o       O o       O o       O o       O
         <header style={{ fontWeight: "bold" }} className="App-header">
           <pre className={`ascii-art ${passwordStatus === 'breached' ? 'breached-ascii' : passwordStatus === 'safe' ? 'safe-ascii' : 'default-ascii'}`}>
             {asciiArt}
-            <div style={{ marginTop: '10px', fontSize: "13.5px", letterSpacing: "0px" }}>セキュリティ ─ セキュリティ ─ セキュリティ</div>
+            <div style={{ marginTop: '10px', fontSize: "13px" }}>deterministic password manager</div>
           </pre>
           <div className="ascii-line"></div>
         </header>
