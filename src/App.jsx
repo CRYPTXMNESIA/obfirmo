@@ -523,7 +523,8 @@ function App() {
                   <li>2. Enter your Master Key</li>
                   <li>3. Enter the site or account name</li>
                   <li>4. Specify the desired length of the password</li>
-                  <li>5. Click the key button to get your password</li>
+                  <li>5. Select character types for your password</li>
+                  <li>6. Click the key button to get your password</li>
                 </ul>
                 <p>
                   <strong>
