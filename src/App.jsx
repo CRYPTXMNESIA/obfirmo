@@ -6,8 +6,6 @@ import seedrandom from 'seedrandom';
 import { minidenticon } from 'minidenticons';
 import './App.css';
 
-const InfoSection = lazy(() => import('./InfoSection'));
-const ProgressContainer = lazy(() => import('./ProgressContainer'));
 const jsSHA = lazy(() => import('jssha'));
 
 function App() {
