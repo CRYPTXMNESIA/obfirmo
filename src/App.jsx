@@ -4,9 +4,8 @@ import { faUnlock, faCopy, faEye, faEyeSlash, faTimes, faCheck, faInfoCircle, fa
 import { AlertTriangle } from 'react-feather';
 import seedrandom from 'seedrandom';
 import { minidenticon } from 'minidenticons';
+import jsSHA from 'jssha';
 import './App.css';
-
-const jsSHA = lazy(() => import('jssha'));
 
 function App() {
   const [masterKey, setMasterKey] = useState('');
